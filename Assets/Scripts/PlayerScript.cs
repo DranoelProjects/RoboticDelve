@@ -5,12 +5,19 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] float speed = 7f;
+    [SerializeField] bool isAbleToAttack = false;
     Animator animator;
     bool lookRight = true;
+    public bool OnAttack = false;
+
+
+    [SerializeField] AudioClip sndAttack;
+    AudioSource audioSource;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -30,6 +37,13 @@ public class PlayerScript : MonoBehaviour
         {
             Flip();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
+        {
+            OnAttack = true;
+            animator.SetTrigger("Attack");
+            audioSource.PlayOneShot(sndAttack);
+        }
     }
 
     void Flip()
@@ -38,6 +52,11 @@ public class PlayerScript : MonoBehaviour
         Vector2 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    public void AttackBool()
+    {
+        OnAttack = false;
     }
 }
 
