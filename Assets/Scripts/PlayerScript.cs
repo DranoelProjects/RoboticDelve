@@ -4,24 +4,31 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    [Header("Common Settings")]
     [SerializeField] float speed = 7f;
     [SerializeField] bool isAbleToAttack = false;
-    Animator animator;
     bool lookRight = true;
     public bool OnAttack = false;
 
+    //animations
+    Animator animator;
 
+    [Header("Sounds")]
     [SerializeField] AudioClip sndAttack;
     AudioSource audioSource;
 
     void Awake()
     {
+        //Animations
         animator = GetComponent<Animator>();
+
+        //Sounds
         audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        //movements
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
         transform.Translate(Vector2.right * moveX * speed * Time.deltaTime);
