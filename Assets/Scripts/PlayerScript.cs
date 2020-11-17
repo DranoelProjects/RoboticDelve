@@ -13,17 +13,17 @@ public class PlayerScript : MonoBehaviour
     //animations
     Animator animator;
 
-    [Header("Sounds")]
-    [SerializeField] AudioClip sndAttack;
+    [SerializeField] AudioClip sndAttack, sndItemPickup;
     AudioSource audioSource;
+
+    //Inventory
+    InventoryManager inventoryManager;
 
     void Awake()
     {
-        //Animations
         animator = GetComponent<Animator>();
-
-        //Sounds
         audioSource = GetComponent<AudioSource>();
+        inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
     void Update()
@@ -64,6 +64,19 @@ public class PlayerScript : MonoBehaviour
     public void AttackBool()
     {
         OnAttack = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            ItemScript itemScript = collision.gameObject.GetComponent<ItemScript>();
+            string itemName = itemScript.ItemName;
+            int itemValue = itemScript.ItemValue;
+            inventoryManager.UpdateItemNumber(itemName, itemValue);
+            Destroy(collision.gameObject);
+            audioSource.PlayOneShot(sndItemPickup);
+        }
     }
 }
 
