@@ -19,11 +19,15 @@ public class PlayerScript : MonoBehaviour
     //Inventory
     InventoryManager inventoryManager;
 
+    //UI
+    UIScript uiScript;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        uiScript = GameObject.Find("MainCanvas").GetComponent<UIScript>();
     }
 
     void Update()
@@ -50,6 +54,12 @@ public class PlayerScript : MonoBehaviour
             OnAttack = true;
             animator.SetTrigger("Attack");
             audioSource.PlayOneShot(sndAttack);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
+            uiScript.UpdateInventoryUI();
         }
     }
 

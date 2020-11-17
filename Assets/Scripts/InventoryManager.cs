@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    int ironIngotNumber, robotPlanNumber, munitionsNumber;
+    public int IronIngotNumber, RobotPlanNumber, MunitionsNumber;
 
     void Awake()
     {
-        ironIngotNumber = PlayerPrefs.GetInt("IronIngot");
-        robotPlanNumber = PlayerPrefs.GetInt("RobotPlan");
-        munitionsNumber = PlayerPrefs.GetInt("Munitions");
+        IronIngotNumber = PlayerPrefs.GetInt("IronIngot");
+        RobotPlanNumber = PlayerPrefs.GetInt("RobotPlan");
+        MunitionsNumber = PlayerPrefs.GetInt("Munitions");
     }
 
     public void UpdateItemNumber(string itemName, int itemValue)
@@ -18,16 +18,13 @@ public class InventoryManager : MonoBehaviour
         switch (itemName)
         {
             case "IronIngot":
-                ironIngotNumber += itemValue;
-                Debug.Log("ironIngotNumber: " + ironIngotNumber);
+                IronIngotNumber += itemValue;
                 break;
             case "RobotPlan":
-                robotPlanNumber += itemValue;
-                Debug.Log("robotPlanNumber: " + robotPlanNumber);
+                RobotPlanNumber += itemValue;
                 break;
             case "Munitions":
-                munitionsNumber += itemValue;
-                Debug.Log("munitionsNumber: " + munitionsNumber);
+                MunitionsNumber += itemValue;
                 break;
             default:
                 break;
@@ -36,8 +33,8 @@ public class InventoryManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetInt("IronIngot", ironIngotNumber);
-        PlayerPrefs.SetInt("RobotPlan", robotPlanNumber);
-        PlayerPrefs.SetInt("Munitions", munitionsNumber);
+        PlayerPrefs.SetInt("IronIngot", IronIngotNumber);
+        PlayerPrefs.SetInt("RobotPlan", RobotPlanNumber);
+        PlayerPrefs.SetInt("Munitions", MunitionsNumber);
     }
 }
