@@ -61,6 +61,11 @@ public class PlayerScript : MonoBehaviour
             uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
             uiScript.UpdateInventoryUI();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            uiScript.PauseGame();
+        }
     }
 
     void Flip()
@@ -86,6 +91,11 @@ public class PlayerScript : MonoBehaviour
             inventoryManager.UpdateItemNumber(itemName, itemValue);
             Destroy(collision.gameObject);
             audioSource.PlayOneShot(sndItemPickup);
+
+            if (uiScript.PanelInventory.activeInHierarchy)
+            {
+                uiScript.UpdateInventoryUI();
+            }
         }
     }
 }
