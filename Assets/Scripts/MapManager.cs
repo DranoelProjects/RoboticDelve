@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
 using System.Text.RegularExpressions;
-using System;
 
 public class MapManager : MonoBehaviour
 {
     public Tilemap m_background, m_walls;
     public List<TileBase> m_tileHolder;
-    public int m_genmapWidth, m_genmapHeight, m_mapWidth, m_mapHeight;
+    public int m_mapSize, m_smoothStep;
+    private int m_genmapWidth, m_genmapHeight, m_mapWidth, m_mapHeight;
     private string[][] m_genMap;
     private int[,] m_metaMap;
 
@@ -18,13 +18,53 @@ public class MapManager : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        m_metaMap = new int[,] {    { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                    { -1,  1,  0,  0,  0,  0,  0,  1,  1, -1},
-                                    { -1,  1,  0,  0,  1,  1,  0,  0,  0, -1},
-                                    { -1,  1,  0,  0,  1,  1,  0,  0,  0, -1},
-                                    { -1,  1,  1,  1,  0,  0,  0,  0,  0, -1},
-                                    { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
+        m_metaMap = generationDuBled(m_mapSize);
+        m_genmapWidth = m_genmapHeight = m_mapWidth = m_mapHeight = m_mapSize;
         updateTileMap();
+    }
+
+    int[,] generationDuBled(int mapSize)
+    {
+        int[,] map = new int[mapSize, mapSize];
+        int[,] temp = map;
+        for (int i = 0; i < m_mapSize; i++)
+        {
+            map[0, i] = 1;
+            map[i, 0] = 1;
+            map[m_mapSize - 1, i] = 1;
+            map[i, m_mapSize - 1] = 1;
+
+        }
+        for (int i = 1; i < mapSize - 1; i++)
+        {
+            for (int j = 1; j < mapSize - 1; j++)
+            {
+                map[i, j] = Random.Range(0, 2);
+            }
+        }
+        int val = 0;
+        for (int k = 0; k < m_smoothStep; k++)
+        {
+            for (int i = 1; i < mapSize - 1; i++)
+            {
+                for (int j = 1; j < mapSize - 1; j++)
+                {
+                    val = map[i - 1, j - 1]
+                        + map[i, j - 1]
+                        + map[i + 1, j - 1]
+                        + map[i - 1, j]
+                        + map[i, j]
+                        + map[i + 1, j]
+                        + map[i - 1, j + 1]
+                        + map[i, j + 1]
+                        + map[i + 1, j + 1];
+                    val = (int) 2* val / 9;
+                    temp[i, j] = val;
+                }
+            }
+            map = temp;
+        }
+        return map;
     }
 
     private void updateTileMap()
@@ -85,6 +125,6 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        
+
     }
 }
