@@ -35,8 +35,11 @@ public class PlayerScript : MonoBehaviour
         //movements
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
-        transform.Translate(Vector2.right * moveX * speed * Time.deltaTime);
-        transform.Translate(Vector2.up * moveY * speed * Time.deltaTime);
+        float actualSpeed = speed;
+        if (moveX != 0 && moveY != 0)
+            actualSpeed = speed / Mathf.Sqrt(2);
+        transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
+        transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
         animator.SetFloat("SpeedX", Mathf.Abs(moveX));
         animator.SetFloat("SpeedY", moveY);
 
