@@ -30,7 +30,7 @@ public class PlayerScript : MonoBehaviour
         uiScript = GameObject.Find("MainCanvas").GetComponent<UIScript>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //movements
         float moveX = Input.GetAxis("Horizontal");
