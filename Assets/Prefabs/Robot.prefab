@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1308311274162676132}
   - component: {fileID: 1308311274162676135}
-  - component: {fileID: 1308311274162676154}
   - component: {fileID: 1308311274162676155}
   - component: {fileID: 1308311274162676184}
   - component: {fileID: 729063475}
+  - component: {fileID: 1122156980937168851}
+  - component: {fileID: 7950858211543968765}
   m_Layer: 0
   m_Name: RobotSprite
   m_TagString: Untagged
@@ -86,22 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1308311274162676154
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308311274162676134}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.10000002
 --- !u!114 &1308311274162676155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +103,7 @@ MonoBehaviour:
   isAbleToAttack: 0
   OnAttack: 0
   sndAttack: {fileID: 8300000, guid: bd0e10e431c10c24a8a1f021dea0e7aa, type: 3}
+  sndItemPickup: {fileID: 8300000, guid: fdcc9842592efd84ca4b5769a07845a0, type: 3}
 --- !u!95 &1308311274162676184
 Animator:
   serializedVersion: 3
@@ -233,6 +219,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!61 &1122156980937168851
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308311274162676134}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0024607033, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.41, y: 0.55}
+    newSize: {x: 0.2, y: 0.2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.28696433, y: 0.55}
+  m_EdgeRadius: 0
+--- !u!50 &7950858211543968765
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308311274162676134}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1308311274291520023
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +291,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308311274291520023}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.783812, y: -2.1236951, z: 3.232727}
+  m_LocalPosition: {x: 6.9425707, y: -2.1236951, z: 3.232727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1308311275688528802}
@@ -311,7 +344,7 @@ GameObject:
   - component: {fileID: 1308311274328708003}
   m_Layer: 0
   m_Name: Robot
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,7 +393,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308311275562326070}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.783812, y: -2.1236951, z: 3.232727}
+  m_LocalPosition: {x: 6.9425707, y: -2.1236951, z: 3.232727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1308311274328708003}
