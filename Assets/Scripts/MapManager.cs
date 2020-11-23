@@ -40,6 +40,7 @@ public class MapManager : MonoBehaviour
         m_ASgg.center = new Vector3(0, 0, 0);
         m_ASgg.SetDimensions(width, depth, nodeSize);
         StartCoroutine(rescan());
+        AstarPath.active.logPathResults = PathLog.None;
     }
 
     IEnumerator rescan()
