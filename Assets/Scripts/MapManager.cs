@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
 using System.Text.RegularExpressions;
+using Pathfinding;
 
 public class MapManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MapManager : MonoBehaviour
     private int m_genmapWidth, m_genmapHeight, m_mapWidth, m_mapHeight;
     private string[][] m_genMap;
     private int[,] m_metaMap;
+    private AstarData m_ASdata;
+    private GridGraph m_ASgg;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,20 @@ public class MapManager : MonoBehaviour
         m_metaMap = generationDuBled(m_mapSize);
         m_genmapWidth = m_genmapHeight = m_mapWidth = m_mapHeight = m_mapSize;
         updateTileMap();
+        m_ASdata = AstarPath.active.data;
+        m_ASgg = m_ASdata.gridGraph;
+        int width = m_mapSize;
+        int depth = m_mapSize;
+        float nodeSize = 1;
+        m_ASgg.center = new Vector3(0, 0, 0);
+        m_ASgg.SetDimensions(width, depth, nodeSize);
+        StartCoroutine(rescan());
+    }
+
+    IEnumerator rescan()
+    {
+        yield return new WaitForSeconds(2);
+        AstarPath.active.Scan(m_ASgg);
     }
 
     int[,] generationDuBled(int mapSize)
