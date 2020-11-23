@@ -22,12 +22,12 @@ public class HealthBarScript : MonoBehaviour
 
         if(GameObject.Find("Scientist"))
         {
-            player = GameObject.Find("Scientist/ScientistSprite").GetComponent<PlayerScript>();
+            player = GameObject.Find("Scientist").GetComponent<PlayerScript>();
             character = "Scientist";
         }
         else if(GameObject.Find("Robot"))
         {
-            player = GameObject.Find("Robot/RobotSprite").GetComponent<PlayerScript>();
+            player = GameObject.Find("Robot").GetComponent<PlayerScript>();
             character = "Robot";
         }
     }
