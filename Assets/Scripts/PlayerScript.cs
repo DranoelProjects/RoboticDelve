@@ -7,8 +7,13 @@ public class PlayerScript : MonoBehaviour
     [Header("Common Settings")]
     [SerializeField] float speed = 7f;
     [SerializeField] bool isAbleToAttack = false;
+<<<<<<< HEAD
     [SerializeField] public float healthpoints = 8;
     [SerializeField] public float healthpointsMax = 10;
+||||||| 3bb14a7
+=======
+    public Transform m_spriteTransform;
+>>>>>>> Enemies
     bool lookRight = true;
     public bool OnAttack = false;
 
@@ -24,10 +29,14 @@ public class PlayerScript : MonoBehaviour
     //UI
     UIScript uiScript;
 
+    //RigidBody
+    Rigidbody2D m_rigidBody2D;
+
     void Awake()
     {
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        m_rigidBody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         uiScript = GameObject.Find("MainCanvas").GetComponent<UIScript>();
     }
@@ -40,6 +49,7 @@ public class PlayerScript : MonoBehaviour
         float actualSpeed = speed;
         if (moveX != 0 && moveY != 0)
             actualSpeed = speed / Mathf.Sqrt(2);
+        //m_rigidBody2D.MovePosition(new Vector2(m_rigidBody2D.position.x + moveX * actualSpeed * Time.deltaTime, m_rigidBody2D.position.y + moveY * actualSpeed * Time.deltaTime));
         transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
         transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
         animator.SetFloat("SpeedX", Mathf.Abs(moveX));
@@ -78,9 +88,9 @@ public class PlayerScript : MonoBehaviour
     void Flip()
     {
         lookRight = !lookRight;
-        Vector2 theScale = transform.localScale;
+        Vector2 theScale =  m_spriteTransform.localScale;
         theScale.x *= -1;
-        transform.localScale = theScale;
+        m_spriteTransform.localScale = theScale;
     }
 
     public void AttackBool()
