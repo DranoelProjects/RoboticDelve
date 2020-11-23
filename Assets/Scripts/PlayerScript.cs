@@ -7,6 +7,8 @@ public class PlayerScript : MonoBehaviour
     [Header("Common Settings")]
     [SerializeField] float speed = 7f;
     [SerializeField] bool isAbleToAttack = false;
+    [SerializeField] public float healthpoints = 8;
+    [SerializeField] public float healthpointsMax = 10;
     bool lookRight = true;
     public bool OnAttack = false;
 
@@ -69,6 +71,8 @@ public class PlayerScript : MonoBehaviour
         {
             uiScript.PauseGame();
         }
+
+        DeathPlayer();
     }
 
     void Flip()
@@ -100,6 +104,13 @@ public class PlayerScript : MonoBehaviour
                 uiScript.UpdateInventoryUI();
             }
         }
+    }
+
+    //Animation of the player death
+    void DeathPlayer()
+    {
+        if(healthpoints == 0)
+            animator.SetTrigger("Fall");
     }
 }
 
