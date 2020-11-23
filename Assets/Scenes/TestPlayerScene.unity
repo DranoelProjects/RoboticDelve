@@ -415,7 +415,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< HEAD
     - target: {fileID: 2679698231642322015, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -431,19 +430,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 6.75948
       objectReference: {fileID: 0}
-||||||| 3bb14a7
-=======
-    - target: {fileID: 2679698231642322015, guid: da1e34b43250a0049bd26ee37ffa65e8,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.826079
-      objectReference: {fileID: 0}
-    - target: {fileID: 2679698233047338625, guid: da1e34b43250a0049bd26ee37ffa65e8,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.826079
-      objectReference: {fileID: 0}
->>>>>>> Enemies
     - target: {fileID: 2679698233144377142, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
       propertyPath: m_LocalPosition.x
