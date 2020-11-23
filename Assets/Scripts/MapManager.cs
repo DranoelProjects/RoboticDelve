@@ -9,6 +9,8 @@ using Pathfinding;
 public class MapManager : MonoBehaviour
 {
     public Tilemap m_background, m_walls;
+    public GameObject[] m_ressources;
+    public GameObject m_ressourcesHolder;
     public List<TileBase> m_tileHolder;
     public int m_mapSize, m_smoothStep;
     private int m_genmapWidth, m_genmapHeight, m_mapWidth, m_mapHeight;
@@ -20,10 +22,16 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Generation
         Application.targetFrameRate = 60;
         m_metaMap = generationDuBled(m_mapSize);
         m_genmapWidth = m_genmapHeight = m_mapWidth = m_mapHeight = m_mapSize;
         updateTileMap();
+
+        //Ressources
+        spawnResources();
+
+        //Pathfinding
         m_ASdata = AstarPath.active.data;
         m_ASgg = m_ASdata.gridGraph;
         int width = m_mapSize;
@@ -128,6 +136,26 @@ public class MapManager : MonoBehaviour
             return tileToDisplay;
         else
             return 0;
+    }
+
+    private void spawnResources()
+    {
+        int x = 0, y = 0;
+        for (int i = 0; i < m_ressources.Length; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                x = Random.Range(0, m_mapSize);
+                y = Random.Range(0, m_mapSize);
+                while (m_metaMap[y,x] == 1)
+                {
+                    x = Random.Range(0, m_mapSize);
+                    y = Random.Range(0, m_mapSize);
+                }
+                GameObject ressource = Instantiate(m_ressources[i], new Vector3(x - (int) m_mapSize / 2 + 0.5f, y - (int) m_mapSize / 2 + 0.5f, 0), Quaternion.identity);
+                ressource.transform.parent = m_ressourcesHolder.transform;
+            }
+        }
     }
 
     private void loadTest()
