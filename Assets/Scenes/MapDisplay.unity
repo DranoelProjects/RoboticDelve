@@ -473,7 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIewncUxWTwIAAPQEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF9VEtz2jAQ/iuMzqVjkwCht9YQ0gOBCe3k4ouw1liDLHn0CI8M/70r2cYunemJ5dtvd799yJ+ES1NBZpVeas5WigH5NiDeJl8GnfMFTnSv5JZfoOW8c2YLT6KB80YtV4jHPsyoEqzm2Xe5F54cIegkz5UuF2wPiTLWIJxTYQBdWlkfLRH6HJAT/gxnPuSM1mjqrQtas2hwRTMDaUF31JbY0mqWk5mgZQXMS+7IccuOa5rEZhqGF54pIbhplBB7rkKnCa2Mwz6QwDjFzkL56OvjDJEC+L6wXmg/fp3nBmyjStPznGucUZ2Y/FD14EpqDrW0DyqcLzUaT4KsOunqH/8wDu5cq/KlrRtHvoYteHZ4o+eMGtubbB+ed9rjMKEjFQe6E/BegHxVS62cZOi02vlQZ2A07/7eWksKyA4dXku9A1313/1cQ/OnRPByV0+yBrZChYmH5YPG3fxEveE0TJMBUS/it4FfdN+/ocbxzLWx6GqalF7dTjntqWQRRuabcTZRWkKAG80VSCrseYNp7P0G73y9sneeZ+pfS1O88bWP4C4kwB0/iu5cG3W87coU6rgCU6ydFVxCJ9o7XnFOiZKyPrD+TNqwrdM5zXphe8fZ35dFHugsY3k0ms6iPI5iNpxAPnuKxtPR+PFh8jRmJJwel9gnFZtaaDMe3Jrskks8s/YjMlhqWoVjZ5oel/xSqt7IuczVNtMAcl1nuAkHjUXwXbIF4zigLVjLZdg3+UyJUNkBWHpLlIZOFyeradplSUnFP5T1SEqS8NVIyZVc/wBQSwMEFAAACAgAAAgh7Edb1OZtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tJJxomVySpqBkbmlQZqhgWGKrllqmqWFgam5kamJsZmFaYpSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAAgh7CdxTFZPAgAA9AQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7Edb1OZtAAAAeAAAAAkAJAAAAAAAAAAAAAAAnAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABUAwAAAAA=
+    dataString: UEsDBBQAAAgIAAAIIexfe1naTQIAAPQEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF9VE1z2jAQ/SuMzk3HZgKB3lqHkB4ITGgnF1+EtMYaZMmjjwDJ8N+7km3s0pmeWN6+3X37IX8SoWwNzGmzNIKvNAfybUSCTb6MeucznOheq634gI7zJrgrA4lGzit1QiOehjCrK3BGsO9qLwM5QdArUWhTLfgeMm2dRbig0gK6jHYhWiH0OSIn/Lmbh5AzWuOHYH2gNU9GFzQZKAemp3bEjtawvGKSVjXwILknpx07bWgKm2kZQTjTUgrbKiHuXMdOM1pbj30ggQuKncXyydf7OSIliH3pgtBh/LooLLhWlaHnR2FwRk1i8kM3g6uoPTTS3qn0odR4Mo2ymqSrf/x3aXQXRlfPXd00CTVcKdjhlZ4ZtW4w2SH82GtP44SOVB7oTsJbCepFL432iqPTGR9CvYXxY//32lpWAjv0eCP1BvT1f/dzic2fMimqXTPJBthKHScelw8Gd/MT9cbTsG0GRIOI3xZ+0f3whlrHkzDWoattUgV1O+1NoJJFHFloxrtMGwURbjXXoKh05w2mcbcbvPENyt54nmh4LW3x1tc9gpuQCPf8JLlxbfTxuitb6uMKbLn2TgoFvejgeME5ZVqp5sCGM+nCtt4UlA3C9l7wvy+LpJzNYZZM+MM0LaZJckfZeDcv6HySzGZjgHsST08o7JPKTSO0HQ9uTfXJFZ5Z9xEZLQ2t47FzQ49L8VHpwciFKvSWGQC1bjJchYPBIvgu+YILHNAWnBMq7pt85kRqdgCeXxPlsdPFyRma91lyUot37QKSkyx+NXJyIZc/UEsDBBQAAAgIAAAIIexRKZrqbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM01VFQSi9KLMgoBooYgjilmSkgdrSSYUqyZaqFgWmKuZlhmpmBgW5islGSZVqipamBhYVRaqqJUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAIIexfe1naTQIAAPQEAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIexRKZrqbQAAAHgAAAAJACQAAAAAAAAAAAAAAJoCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAUgMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -702,6 +702,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 745926334, guid: da1e34b43250a0049bd26ee37ffa65e8, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2679698231642322015, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1271,12 +1275,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 2
-  radius: 0.48
+  radius: 0.5
   height: 2
   repathRate: 0.5
   canSearch: 1
   canMove: 1
-  maxSpeed: 7
+  maxSpeed: 1
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -1286,14 +1290,14 @@ MonoBehaviour:
   enableRotation: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
-  rotationSpeed: 360
+  rotationSpeed: 32400
   slowdownDistance: 0.6
   pickNextWaypointDist: 2
-  endReachedDistance: 1.2
+  endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
-  constrainInsideGraph: 1
+  constrainInsideGraph: 0
 --- !u!114 &3568701457848798138
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,13 +7,11 @@ public class PlayerScript : MonoBehaviour
     [Header("Common Settings")]
     [SerializeField] float speed = 7f;
     [SerializeField] bool isAbleToAttack = false;
-<<<<<<< HEAD
     [SerializeField] public float healthpoints = 8;
     [SerializeField] public float healthpointsMax = 10;
-||||||| 3bb14a7
-=======
+
     public Transform m_spriteTransform;
->>>>>>> Enemies
+
     bool lookRight = true;
     public bool OnAttack = false;
 
