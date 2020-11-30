@@ -25,7 +25,7 @@ public class GameManagerScript : MonoBehaviour
             if (!isRobotAlreadyInstantiate)
             {
                 robotPrefab.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-                Instantiate(robotPrefab);
+                Instantiate(robotPrefab, new Vector3(scientist.transform.localPosition.x, scientist.transform.localPosition.y, 0), Quaternion.identity);
                 isRobotAlreadyInstantiate = true;
             }
             GameObject robot = GameObject.FindGameObjectWithTag("Robot");
