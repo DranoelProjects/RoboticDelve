@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +10,10 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] bool isAbleToAttack = false;
     [SerializeField] public float healthpoints = 8;
     [SerializeField] public float healthpointsMax = 10;
+    GameManagerScript gameManagerScript;
+    public bool CanMoove = true;
 
     public Transform m_spriteTransform;
-
     bool lookRight = true;
     public bool OnAttack = false;
 
@@ -37,50 +39,60 @@ public class PlayerScript : MonoBehaviour
         audioSource = GetComponentInChildren<AudioSource>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         uiScript = GameObject.Find("MainCanvas").GetComponent<UIScript>();
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
     }
 
     void FixedUpdate()
     {
-        //movements
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
-        float actualSpeed = speed;
-        if (moveX != 0 && moveY != 0)
-            actualSpeed = speed / Mathf.Sqrt(2);
-        //m_rigidBody2D.MovePosition(new Vector2(m_rigidBody2D.position.x + moveX * actualSpeed * Time.deltaTime, m_rigidBody2D.position.y + moveY * actualSpeed * Time.deltaTime));
-        transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
-        transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
-        animator.SetFloat("SpeedX", Mathf.Abs(moveX));
-        animator.SetFloat("SpeedY", moveY);
-
-        if (moveX > 0 && !lookRight)
+        if (CanMoove)
         {
-            Flip();
-        }
-        else if (moveX < 0 && lookRight)
-        {
-            Flip();
-        }
+            //movements
+            float moveX = Input.GetAxis("Horizontal");
+            float moveY = Input.GetAxis("Vertical");
+            float actualSpeed = speed;
+            if (moveX != 0 && moveY != 0)
+                actualSpeed = speed / Mathf.Sqrt(2);
+            //m_rigidBody2D.MovePosition(new Vector2(m_rigidBody2D.position.x + moveX * actualSpeed * Time.deltaTime, m_rigidBody2D.position.y + moveY * actualSpeed * Time.deltaTime));
+            transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
+            transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
+            animator.SetFloat("SpeedX", Mathf.Abs(moveX));
+            animator.SetFloat("SpeedY", moveY);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
-        {
-            OnAttack = true;
-            animator.SetTrigger("Attack");
-            audioSource.PlayOneShot(sndAttack);
-        }
+            if (moveX > 0 && !lookRight)
+            {
+                Flip();
+            }
+            else if (moveX < 0 && lookRight)
+            {
+                Flip();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
-            uiScript.UpdateInventoryUI();
-        }
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
+            {
+                OnAttack = true;
+                animator.SetTrigger("Attack");
+                audioSource.PlayOneShot(sndAttack);
+                StartCoroutine(AttackBool());
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            uiScript.PauseGame();
-        }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
+                uiScript.UpdateInventoryUI();
+            }
 
-        DeathPlayer();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                uiScript.PauseGame();
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                gameManagerScript.SwapBetweenRobotAndPlayer();
+            }
+
+            DeathPlayer();
+        }
     }
 
     void Flip()
@@ -91,8 +103,9 @@ public class PlayerScript : MonoBehaviour
         m_spriteTransform.localScale = theScale;
     }
 
-    public void AttackBool()
+    IEnumerator AttackBool()
     {
+        yield return new WaitForSeconds(0.3f);
         OnAttack = false;
     }
 
