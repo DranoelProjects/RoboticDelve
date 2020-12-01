@@ -42,6 +42,24 @@ public class PlayerScript : MonoBehaviour
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            uiScript.PauseGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
+            uiScript.UpdateInventoryUI();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            gameManagerScript.SwapBetweenRobotAndPlayer();
+        }
+    }
+
     void FixedUpdate()
     {
         if (CanMoove)
@@ -73,22 +91,6 @@ public class PlayerScript : MonoBehaviour
                 animator.SetTrigger("Attack");
                 audioSource.PlayOneShot(sndAttack);
                 StartCoroutine(AttackBool());
-            }
-
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
-                uiScript.UpdateInventoryUI();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                uiScript.PauseGame();
-            }
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                gameManagerScript.SwapBetweenRobotAndPlayer();
             }
 
             DeathPlayer();

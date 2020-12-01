@@ -7,28 +7,43 @@ public class UIScript : MonoBehaviour
 {
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber;
     public GameObject PanelInventory, PanelPause;
+    [SerializeField] GameObject panelParameters;
     InventoryManager inventoryManager;
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource;
+    AudioSource[] sources;
+    float musicVolume, soundsEffectsVolume;
 
     void Awake()
     {
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
-        if (PlayerPrefs.GetInt("IsVolumeSave") == 1)
-        {
-            sliderMusic.value = PlayerPrefs.GetFloat("MusicVolume");
-            sliderSoundsEffects.value = PlayerPrefs.GetFloat("SoundsEffectsVolume");
-        } else
-        {
-            sliderMusic.value = 1f;
-            sliderSoundsEffects.value = 1f;
-        }
     }
 
     private void Start()
     {
-        OnChangeMusicSlider();
-        OnChangeSoundsEffectsSlider();
+        initVolumes();
+    }
+
+    void initVolumes()
+    {
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+        } else
+        {
+            musicVolume = 1f;
+        }
+        if (PlayerPrefs.HasKey("SoundsEffectsVolume"))
+        {
+            soundsEffectsVolume = PlayerPrefs.GetFloat("SoundsEffectsVolume");
+        } else
+        {
+            soundsEffectsVolume = 1f;
+        }
+        sliderSoundsEffects.value = soundsEffectsVolume;
+        sliderMusic.value = musicVolume;
+        updateMusicVolume();
+        updateSoundsEffectsVolume();
     }
 
     public void UpdateInventoryUI()
@@ -47,6 +62,7 @@ public class UIScript : MonoBehaviour
         else
         {
             Time.timeScale = 1;
+            panelParameters.SetActive(false);
         }
         PanelPause.SetActive(!PanelPause.activeInHierarchy);
     }
@@ -65,30 +81,39 @@ public class UIScript : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void OnChangeSoundsEffectsSlider()
+    public void OnChangeSoundsEffectsSlider(System.Single vol)
     {
-        musicAudioSource = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
-        AudioSource[] sources;
+        soundsEffectsVolume = vol;
+        updateSoundsEffectsVolume();
+    }
+
+    public void OnChangeMusicSlider(System.Single vol)
+    {
+        musicVolume = vol;
+        updateMusicVolume();
+    }
+
+    void updateSoundsEffectsVolume()
+    {
         sources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
         foreach (AudioSource asource in sources)
         {
-            if(asource.tag != "Music")
+            if (asource.tag != "Music")
             {
-                asource.volume = sliderSoundsEffects.value;
+                asource.volume = soundsEffectsVolume;
             }
         }
-        PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
     }
 
-    public void OnChangeMusicSlider()
+    void updateMusicVolume()
     {
         musicAudioSource = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
-        musicAudioSource.volume = sliderMusic.value;
-        PlayerPrefs.SetFloat("MusicVolume", sliderMusic.value);
+        musicAudioSource.volume = musicVolume;
     }
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
-        PlayerPrefs.SetInt("IsVolumeSave", 1);
+        PlayerPrefs.SetFloat("MusicVolume", sliderMusic.value);
+        PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
     }
 }

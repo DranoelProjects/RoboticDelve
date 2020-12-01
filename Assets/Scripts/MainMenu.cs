@@ -8,20 +8,36 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource;
+    AudioSource[] sources;
+    float musicVolume, soundsEffectsVolume;
 
     void Start()
     {
-        musicAudioSource = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
-        if (PlayerPrefs.GetInt("IsVolumeSave") == 1)
+        initVolumes();
+    }
+
+    void initVolumes()
+    {
+        if (PlayerPrefs.HasKey("MusicVolume"))
         {
-            sliderMusic.value = PlayerPrefs.GetFloat("MusicVolume");
-            sliderSoundsEffects.value = PlayerPrefs.GetFloat("SoundsEffectsVolume");
+            musicVolume = PlayerPrefs.GetFloat("MusicVolume");
         }
         else
         {
-            sliderMusic.value = 1f;
-            sliderSoundsEffects.value = 1f;
+            musicVolume = 1f;
         }
+        if (PlayerPrefs.HasKey("SoundsEffectsVolume"))
+        {
+            soundsEffectsVolume = PlayerPrefs.GetFloat("SoundsEffectsVolume");
+        }
+        else
+        {
+            soundsEffectsVolume = 1f;
+        }
+        sliderSoundsEffects.value = soundsEffectsVolume;
+        sliderMusic.value = musicVolume;
+        updateMusicVolume();
+        updateSoundsEffectsVolume();
     }
 
     public void NewGame()
@@ -38,25 +54,40 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
-    public void OnChangeSoundsEffectsSlider()
+    public void OnChangeSoundsEffectsSlider(System.Single vol)
     {
-        AudioSource[] sources;
+        soundsEffectsVolume = vol;
+        updateSoundsEffectsVolume();
+    }
+
+    public void OnChangeMusicSlider(System.Single vol)
+    {
+        musicVolume = vol;
+        updateMusicVolume();
+    }
+
+    void updateSoundsEffectsVolume()
+    {
         sources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
         foreach (AudioSource asource in sources)
         {
             if (asource.tag != "Music")
             {
-                asource.volume = sliderSoundsEffects.value;
+                asource.volume = soundsEffectsVolume;
             }
         }
-        PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
-        PlayerPrefs.SetInt("IsVolumeSave", 1);
     }
 
-    public void OnChangeMusicSlider()
+    void updateMusicVolume()
     {
-        musicAudioSource.volume = sliderMusic.value;
-        PlayerPrefs.SetFloat("MusicVolume", sliderMusic.value);
-        PlayerPrefs.SetInt("IsVolumeSave", 1);
+        musicAudioSource = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+        musicAudioSource.volume = musicVolume;
     }
+
+    private void OnDestroy() 
+    {
+        PlayerPrefs.SetFloat("MusicVolume", sliderMusic.value);
+        PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
+    }
+
 }
