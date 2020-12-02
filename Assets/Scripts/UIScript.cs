@@ -7,7 +7,7 @@ public class UIScript : MonoBehaviour
 {
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber;
     public GameObject PanelInventory, PanelPause;
-    [SerializeField] GameObject panelParameters;
+    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList;
     InventoryManager inventoryManager;
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource;
@@ -46,11 +46,28 @@ public class UIScript : MonoBehaviour
         updateSoundsEffectsVolume();
     }
 
+    public void UpdateRobotsPlansList()
+    {   
+        foreach (Transform child in panelRobotsPlansList.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        List<RobotPlanData> playerRobotsPlansArray = inventoryManager.PlayerRobotsPlansArray;
+
+        foreach (RobotPlanData robotData in playerRobotsPlansArray)
+        {
+            prefabRobotPlanInventory.GetComponentInChildren<Text>().text = robotData.Description;
+            Instantiate(prefabRobotPlanInventory, panelRobotsPlansList.transform);
+        }
+    }
+
     public void UpdateInventoryUI()
     {
         ironIngotNumber.text = inventoryManager.IronIngotNumber.ToString();
         robotPlanNumber.text = inventoryManager.RobotPlanNumber.ToString();
         munitionsNumber.text = inventoryManager.MunitionsNumber.ToString();
+        UpdateRobotsPlansList();
     }
 
     public void PauseGame()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public int IronIngotNumber, RobotPlanNumber, MunitionsNumber;
+    public List<RobotPlanData> PlayerRobotsPlansArray = new List<RobotPlanData>();
 
     void Awake()
     {
@@ -29,6 +30,11 @@ public class InventoryManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void AddNewPlan(RobotPlanData robotPlanData)
+    {
+        PlayerRobotsPlansArray.Add(robotPlanData);
     }
 
     private void OnApplicationQuit()
