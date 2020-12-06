@@ -1,5 +1,4 @@
-﻿using Cinemachine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +9,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] bool isAbleToAttack = false;
     [SerializeField] public float healthpoints = 8;
     [SerializeField] public float healthpointsMax = 10;
-    GameManagerScript gameManagerScript;
-    public bool CanMoove = true;
 
     public Transform m_spriteTransform;
+
     bool lookRight = true;
     public bool OnAttack = false;
 
@@ -39,10 +37,9 @@ public class PlayerScript : MonoBehaviour
         audioSource = GetComponentInChildren<AudioSource>();
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         uiScript = GameObject.Find("MainCanvas").GetComponent<UIScript>();
-        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
     }
 
-    private void Update()
+    void FixedUpdate()
     {
         //movements
         float moveX = Input.GetAxis("Horizontal");
@@ -60,60 +57,26 @@ public class PlayerScript : MonoBehaviour
             Flip();
         else if (moveX < 0 && lookRight)
             Flip();
-        //Problème de merge je ne sais pas ce qu'il y a ici
-        //if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
         {
-            uiScript.PauseGame();
+            OnAttack = true;
+            animator.SetTrigger("Attack");
+            audioSource.PlayOneShot(sndAttack);
         }
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
             uiScript.UpdateInventoryUI();
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameManagerScript.SwapBetweenRobotAndPlayer();
+            uiScript.PauseGame();
         }
-    }
 
-    void FixedUpdate()
-    {
-        if (CanMoove)
-        {
-            //movements
-            float moveX = Input.GetAxis("Horizontal");
-            float moveY = Input.GetAxis("Vertical");
-            float actualSpeed = speed;
-            if (moveX != 0 && moveY != 0)
-                actualSpeed = speed / Mathf.Sqrt(2);
-            //m_rigidBody2D.MovePosition(new Vector2(m_rigidBody2D.position.x + moveX * actualSpeed * Time.deltaTime, m_rigidBody2D.position.y + moveY * actualSpeed * Time.deltaTime));
-            transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
-            transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
-            animator.SetFloat("SpeedX", Mathf.Abs(moveX));
-            animator.SetFloat("SpeedY", moveY);
-
-            if (moveX > 0 && !lookRight)
-            {
-                Flip();
-            }
-            else if (moveX < 0 && lookRight)
-            {
-                Flip();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
-            {
-                OnAttack = true;
-                animator.SetTrigger("Attack");
-                audioSource.PlayOneShot(sndAttack);
-                StartCoroutine(AttackBool());
-            }
-
-            DeathPlayer();
-        }
+        DeathPlayer();
     }
 
     void Flip()
@@ -124,9 +87,8 @@ public class PlayerScript : MonoBehaviour
         m_spriteTransform.localScale = theScale;
     }
 
-    IEnumerator AttackBool()
+    public void AttackBool()
     {
-        yield return new WaitForSeconds(0.3f);
         OnAttack = false;
     }
 
@@ -144,12 +106,6 @@ public class PlayerScript : MonoBehaviour
             if (uiScript.PanelInventory.activeInHierarchy)
             {
                 uiScript.UpdateInventoryUI();
-            }
-
-            if(itemName == "RobotPlan")
-            {
-                RobotPlanScript robotPlanScript = collision.gameObject.GetComponent<RobotPlanScript>();
-                inventoryManager.AddNewPlan(robotPlanScript.CurrentRobot);
             }
         }
     }
