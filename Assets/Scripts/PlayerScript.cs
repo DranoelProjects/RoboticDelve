@@ -54,13 +54,9 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("SpeedY", moveY);
 
         if (moveX > 0 && !lookRight)
-        {
             Flip();
-        }
         else if (moveX < 0 && lookRight)
-        {
             Flip();
-        }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
         {

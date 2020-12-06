@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2679698231642322083}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.826079, y: -2.1236951, z: 3.232727}
+  m_LocalPosition: {x: -0.15546626, y: -0.09216547, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2679698233144377142}
@@ -60,7 +60,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10.9
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -231,9 +231,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2679698232976952627}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.2497244, y: -1.8725443, z: 13.232728}
-  m_LocalScale: {x: 7.2199, y: 7.2199, z: 7.2199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 2679698233144377142}
   m_RootOrder: 1
@@ -276,7 +276,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7985851070333483904, guid: 998e43166d6b60c4c9bc0e610f63d2d4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -429,7 +429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2679698233047338626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.826079, y: -2.1236951, z: 3.232727}
+  m_LocalPosition: {x: -0.15546626, y: -0.09216547, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2679698231784515383}
@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2679698232976952625}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 10.9
+    OrthographicSize: 4
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -481,7 +481,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2679698233144377142}
   - component: {fileID: 8220394539383749397}
-  - component: {fileID: 5513658123600330532}
+  - component: {fileID: 8570541601207082852}
+  - component: {fileID: 1095839570762979312}
   m_Layer: 0
   m_Name: Scientist
   m_TagString: Player
@@ -497,8 +498,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2679698233144377143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.1197243, y: 1.8125443, z: -23.335938}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children:
   - {fileID: 2679698231642322015}
   - {fileID: 2679698232976952625}
@@ -520,12 +521,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   isAbleToAttack: 1
-  m_spriteTransform: {fileID: 0}
+  healthpoints: 8
+  healthpointsMax: 10
+  m_spriteTransform: {fileID: 2679698232976952625}
   OnAttack: 0
   sndAttack: {fileID: 8300000, guid: bd0e10e431c10c24a8a1f021dea0e7aa, type: 3}
   sndItemPickup: {fileID: 8300000, guid: fdcc9842592efd84ca4b5769a07845a0, type: 3}
---- !u!61 &5513658123600330532
-BoxCollider2D:
+--- !u!58 &8570541601207082852
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -537,16 +540,27 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.4}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.2
+--- !u!50 &1095839570762979312
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2679698233144377143}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1.5
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
