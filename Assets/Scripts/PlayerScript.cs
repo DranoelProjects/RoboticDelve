@@ -42,6 +42,43 @@ public class PlayerScript : MonoBehaviour
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
     }
 
+    private void Update()
+    {
+        //movements
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxis("Vertical");
+        float actualSpeed = speed;
+        if (moveX != 0 && moveY != 0)
+            actualSpeed = speed / Mathf.Sqrt(2);
+        //m_rigidBody2D.MovePosition(new Vector2(m_rigidBody2D.position.x + moveX * actualSpeed * Time.deltaTime, m_rigidBody2D.position.y + moveY * actualSpeed * Time.deltaTime));
+        transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
+        transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
+        animator.SetFloat("SpeedX", Mathf.Abs(moveX));
+        animator.SetFloat("SpeedY", moveY);
+
+        if (moveX > 0 && !lookRight)
+            Flip();
+        else if (moveX < 0 && lookRight)
+            Flip();
+        //Problème de merge je ne sais pas ce qu'il y a ici
+        //if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            uiScript.PauseGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
+            uiScript.UpdateInventoryUI();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            gameManagerScript.SwapBetweenRobotAndPlayer();
+        }
+    }
+
     void FixedUpdate()
     {
         if (CanMoove)
@@ -59,9 +96,13 @@ public class PlayerScript : MonoBehaviour
             animator.SetFloat("SpeedY", moveY);
 
             if (moveX > 0 && !lookRight)
+            {
                 Flip();
+            }
             else if (moveX < 0 && lookRight)
+            {
                 Flip();
+            }
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
             {
@@ -71,23 +112,7 @@ public class PlayerScript : MonoBehaviour
                 StartCoroutine(AttackBool());
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
-                uiScript.UpdateInventoryUI();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                uiScript.PauseGame();
-            }
-
             DeathPlayer();
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                gameManagerScript.SwapBetweenRobotAndPlayer();
-            }
         }
     }
 
