@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
     public float newWaypointDistance = .5f;
     public float minDistance = 2f;
     public float detRange = 10f;
-    [SerializeField] public float healthpoints = 8;
+    [SerializeField] public float healthpoints = 10;
     [SerializeField] public float healthpointsMax = 10;
 
     Path path;

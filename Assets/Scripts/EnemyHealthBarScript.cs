@@ -10,6 +10,7 @@ public class EnemyHealthBarScript : MonoBehaviour
     public Image fillBar;
     PlayerScript player;
     EnemyAI enemy;
+    GameObject parent;
     
     //Animations
     Animator animator;
@@ -17,7 +18,9 @@ public class EnemyHealthBarScript : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        enemy = GameObject.Find("Enemy").GetComponent<EnemyAI>();
+        // enemy = transform.parent.GetComponent<EnemyAI>();
+        enemy = this.GetComponentInParent<EnemyAI>();
+
         
     }
 

@@ -35,6 +35,10 @@ public class GameManagerScript : MonoBehaviour
                 robot.GetComponent<PlayerScript>().CanMoove = true;
                 scientist.GetComponent<PlayerScript>().CanMoove = false;
                 isVirtualCamFollowingScientist = false;
+
+                scientist.transform.Find("Healthbar").gameObject.SetActive(false);
+                robot.transform.Find("Healthbar").gameObject.SetActive(true);
+
             }
             else
             {
@@ -42,6 +46,9 @@ public class GameManagerScript : MonoBehaviour
                 robot.GetComponent<PlayerScript>().CanMoove = false;
                 scientist.GetComponent<PlayerScript>().CanMoove = true;
                 isVirtualCamFollowingScientist = true;
+
+                scientist.transform.Find("Healthbar").gameObject.SetActive(true);
+                robot.transform.Find("Healthbar").gameObject.SetActive(false);
             }
             StartCoroutine(SwapCooldown());
         }
