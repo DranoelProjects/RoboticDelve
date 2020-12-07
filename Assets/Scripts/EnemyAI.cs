@@ -5,7 +5,8 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform target, sprite;
+    public Transform sprite;
+    private Transform target;
     public GameObject[] player;
     public float speed = 7f;
     public float newWaypointDistance = 3f;
