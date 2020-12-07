@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2679698231642322083}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15546626, y: -0.09216547, z: -5}
+  m_LocalPosition: {x: -0.19433284, y: -0.11520672, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2679698233144377142}
@@ -60,7 +60,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 139428056}
   m_Layer: 0
   m_Name: ScientistSprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -276,7 +276,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: -7985851070333483904, guid: 998e43166d6b60c4c9bc0e610f63d2d4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -429,7 +429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2679698233047338626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15546626, y: -0.09216547, z: -5}
+  m_LocalPosition: {x: -0.19433284, y: -0.11520672, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2679698231784515383}
@@ -454,11 +454,11 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 2679698232976952625}
-  m_Follow: {fileID: 2679698232976952625}
+  m_LookAt: {fileID: 2679698233144377142}
+  m_Follow: {fileID: 2679698233144377142}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 4
+    OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 2679698233144377142}
   - component: {fileID: 8220394539383749397}
   - component: {fileID: 8570541601207082852}
-  - component: {fileID: 1095839570762979312}
+  - component: {fileID: 1062024448}
   m_Layer: 0
   m_Name: Scientist
   m_TagString: Player
@@ -523,6 +523,7 @@ MonoBehaviour:
   isAbleToAttack: 1
   healthpoints: 8
   healthpointsMax: 10
+  CanMoove: 1
   m_spriteTransform: {fileID: 2679698232976952625}
   OnAttack: 0
   sndAttack: {fileID: 8300000, guid: bd0e10e431c10c24a8a1f021dea0e7aa, type: 3}
@@ -543,7 +544,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.4}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!50 &1095839570762979312
+--- !u!50 &1062024448
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -556,11 +557,11 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1.5
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_CollisionDetection: 1
+  m_Constraints: 7

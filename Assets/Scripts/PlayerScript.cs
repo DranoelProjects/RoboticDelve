@@ -70,9 +70,9 @@ public class PlayerScript : MonoBehaviour
             float actualSpeed = speed;
             if (moveX != 0 && moveY != 0)
                 actualSpeed = speed / Mathf.Sqrt(2);
-            //m_rigidBody2D.MovePosition(new Vector2(m_rigidBody2D.position.x + moveX * actualSpeed * Time.deltaTime, m_rigidBody2D.position.y + moveY * actualSpeed * Time.deltaTime));
-            transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
-            transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
+            m_rigidBody2D.MovePosition(new Vector2(m_rigidBody2D.position.x + moveX * actualSpeed * Time.deltaTime, m_rigidBody2D.position.y + moveY * actualSpeed * Time.deltaTime));
+            //transform.Translate(Vector2.right * moveX * actualSpeed * Time.deltaTime);
+            //transform.Translate(Vector2.up * moveY * actualSpeed * Time.deltaTime);
             animator.SetFloat("SpeedX", Mathf.Abs(moveX));
             animator.SetFloat("SpeedY", moveY);
 

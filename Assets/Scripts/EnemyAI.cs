@@ -7,9 +7,9 @@ public class EnemyAI : MonoBehaviour
 {
     public Transform sprite;
     private Transform target;
-    public GameObject[] player;
-    public float speed = 7f;
-    public float newWaypointDistance = 3f;
+    private GameObject[] player;
+    public float speed = 200f;
+    public float newWaypointDistance = .5f;
     public float minDistance = 2f;
     public float detRange = 10f;
 
