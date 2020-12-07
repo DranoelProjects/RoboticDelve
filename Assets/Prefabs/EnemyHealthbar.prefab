@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4673597819815874225}
   - component: {fileID: 4673597819815874224}
   m_Layer: 5
-  m_Name: Healthbar
+  m_Name: EnemyHealthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ Canvas:
   m_GameObject: {fileID: 4673597819815874227}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 4673597820404500703}
   - component: {fileID: 4673597820404500699}
   - component: {fileID: 4673597820404500698}
-  - component: {fileID: 4673597820404500701}
+  - component: {fileID: 5914037234558834981}
   - component: {fileID: 4673597820404500700}
   m_Layer: 5
   m_Name: FillBar
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4673597820404500701
+--- !u!114 &5914037234558834981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4673597820404500702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50cd06f44c27c0f41b655ccf02b0ddf2, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a63a3abd0f1c8c44828c944ca5dbacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fillBar: {fileID: 4673597820404500698}

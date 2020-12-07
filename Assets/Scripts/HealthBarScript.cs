@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class HealthBarScript : MonoBehaviour
 {
-    [SerializeField] float healthPoints;
+    float healthPoints;
     public Image fillBar;
     PlayerScript player;
+    EnemyAI enemy;
     GameObject Scientist;
     string character;
     int i = 0;
@@ -30,6 +31,7 @@ public class HealthBarScript : MonoBehaviour
             player = GameObject.Find("Robot").GetComponent<PlayerScript>();
             character = "Robot";
         }
+        
     }
 
     // Update is called once per frame
