@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class UIScript : MonoBehaviour
 {
-    [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber;
+    [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
+        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber;
     public GameObject PanelInventory, PanelPause;
     [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList;
     InventoryManager inventoryManager;
@@ -67,6 +68,13 @@ public class UIScript : MonoBehaviour
         ironIngotNumber.text = inventoryManager.IronIngotNumber.ToString();
         robotPlanNumber.text = inventoryManager.RobotPlanNumber.ToString();
         munitionsNumber.text = inventoryManager.MunitionsNumber.ToString();
+        goldNuggetNumber.text = inventoryManager.GoldNuggetAmount.ToString();
+        keyNumber.text = inventoryManager.KeyAmount.ToString();
+        copperIngotNumber.text = inventoryManager.CopperIngotAmount.ToString();
+        chlorophyteIngotNumber.text = inventoryManager.ChlorophyteIngotAmount.ToString();
+        leadIngotNumber.text = inventoryManager.LeadIngotAmount.ToString();
+        cobaltIngotNumber.text = inventoryManager.CobaltIngotAmount.ToString();
+        titaniumIngotNumber.text = inventoryManager.TitaniumIngotAmount.ToString();
         UpdateRobotsPlansList();
     }
 
