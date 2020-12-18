@@ -11,7 +11,8 @@ public class UIScript : MonoBehaviour
     [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList;
     InventoryManager inventoryManager;
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
-    AudioSource musicAudioSource;
+    AudioSource musicAudioSource, canvasAudioSource;
+    [SerializeField] AudioClip sndBtnClicked;
     AudioSource[] sources;
     float musicVolume, soundsEffectsVolume;
 
@@ -22,6 +23,7 @@ public class UIScript : MonoBehaviour
 
     private void Start()
     {
+        canvasAudioSource = gameObject.GetComponent<AudioSource>();
         initVolumes();
     }
 
@@ -140,5 +142,11 @@ public class UIScript : MonoBehaviour
     {
         PlayerPrefs.SetFloat("MusicVolume", sliderMusic.value);
         PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
+    }
+
+    public void PlayButtonClickedSound()
+    {
+        canvasAudioSource.volume = soundsEffectsVolume;
+        canvasAudioSource.PlayOneShot(sndBtnClicked);
     }
 }

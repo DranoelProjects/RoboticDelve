@@ -7,12 +7,14 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
-    AudioSource musicAudioSource;
+    AudioSource musicAudioSource, mainMenuAudioSource;
+    [SerializeField] AudioClip sndBtnClicked;
     AudioSource[] sources;
     float musicVolume, soundsEffectsVolume;
 
     void Start()
     {
+        mainMenuAudioSource = gameObject.GetComponent<AudioSource>();
         initVolumes();
     }
 
@@ -42,11 +44,13 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
+        PlayButtonClickedSound();
         SceneManager.LoadScene("MapDisplay");
     }
 
     public void QuitGame()
     {
+        PlayButtonClickedSound();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -90,4 +94,9 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
     }
 
+    public void PlayButtonClickedSound()
+    {
+        mainMenuAudioSource.volume = soundsEffectsVolume;
+        mainMenuAudioSource.PlayOneShot(sndBtnClicked);
+    }
 }
