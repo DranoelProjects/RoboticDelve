@@ -2,25 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pattern : MonoBehaviour
+public class Pattern
 {
     int id;
     int[] freqTot;
     int[,] pattern;
     List<int>[] adjRules, hintFreq;
-    // Start is called before the first frame update
+
     public Pattern(int[,] pat, int idtf)
     {
         pattern = pat;
         id = idtf;
         adjRules = new List<int>[8];
         hintFreq = new List<int>[8];
+        for (int i = 0; i < 8; i++)
+        {
+            adjRules[i] = new List<int>();
+            hintFreq[i] = new List<int>();
+        }
         freqTot = new int[8];
     }
 
     void setPattern(int[,] pat)
     {
         pattern = pat;
+    }
+
+    public bool isEqual(int[,] other)
+    {
+        bool equals = true;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (this.pattern[i, j] != other[i, j])
+                {
+                    equals = false;
+                }
+            }
+        }
+        return equals;
     }
 
     public int[,] getPattern()
@@ -63,9 +84,8 @@ public class Pattern : MonoBehaviour
         return id;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int getTile()
     {
-        
+        return pattern[1, 1];
     }
 }
