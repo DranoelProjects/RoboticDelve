@@ -290,9 +290,16 @@ MonoBehaviour:
   bossName: Demon Boss
   ShouldUpdatePlayerArray: 1
   OnAttack: 0
+  IsRanged: 0
   sndAttack: {fileID: 8300000, guid: ffb5bad34c38561439227d5f2ff952aa, type: 3}
   sndDead: {fileID: 8300000, guid: 03f32c6d938f4c74ba704e3f3cf880c5, type: 3}
   sndBoss: {fileID: 0}
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
+  arrow: {fileID: 0}
+  shootForce: 250
+  timeShooting: 0.4
 --- !u!58 &1364158762565080155
 CircleCollider2D:
   m_ObjectHideFlags: 0
