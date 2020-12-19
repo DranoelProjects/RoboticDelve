@@ -8,10 +8,11 @@ public class EnemyHealthBarScript : MonoBehaviour
 {
     float EnemyhealthPoints;
     public Image fillBar;
-    PlayerScript player;
     EnemyAI enemy;
-    GameObject parent;
-    
+    public Image FillBarParent;
+    public Text Txt;
+    public bool IsBoss = false;
+
     //Animations
     Animator animator;
 
@@ -20,14 +21,15 @@ public class EnemyHealthBarScript : MonoBehaviour
         animator = GetComponent<Animator>();
         // enemy = transform.parent.GetComponent<EnemyAI>();
         enemy = this.GetComponentInParent<EnemyAI>();
-
-        
     }
 
     public void UpdateHealthPoints()
     {
         EnemyhealthPoints = enemy.healthpoints/enemy.healthpointsMax;
-        // healthPoints = 0.6f;
+        if (IsBoss)
+        {
+            Txt.text = (EnemyhealthPoints * 100) + " %";
+        }
         fillBar.fillAmount = EnemyhealthPoints;
     }
 

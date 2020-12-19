@@ -9,6 +9,7 @@ public class HealthBarScript : MonoBehaviour
     float healthPoints;
     public Image fillBar;
     PlayerScript player;
+    [SerializeField] Text txt;
     EnemyAI enemy;
     
     void Awake()
@@ -20,6 +21,11 @@ public class HealthBarScript : MonoBehaviour
     public void UpdateHealthPoints()
     {
         healthPoints = player.healthpoints / player.healthpointsMax;
+        txt.text = (healthPoints * 100) + " %";
         fillBar.fillAmount = healthPoints;
+        if(healthPoints < 0.4f)
+        {
+            fillBar.color = Color.red;
+        }
     }
 }

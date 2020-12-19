@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 public class UIScript : MonoBehaviour
 {
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
-        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber;
-    public GameObject PanelInventory, PanelPause;
+        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText;
+    public GameObject PanelInventory, PanelPause, PanelBoss;
     [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat;
+    [SerializeField] Image bossFillBar;
     InventoryManager inventoryManager;
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource, canvasAudioSource;
-    [SerializeField] AudioClip sndBtnClicked;
+    [SerializeField] AudioClip sndBtnClicked, music;
     AudioSource[] sources;
     float musicVolume, soundsEffectsVolume;
 
@@ -153,5 +154,32 @@ public class UIScript : MonoBehaviour
     public void ShowDefeatPanel()
     {
         panelDefeat.SetActive(!panelDefeat.activeInHierarchy);
+    }
+
+    public void PlayBossMusic(AudioClip audioClip)
+    {
+        musicAudioSource = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+        musicAudioSource.Stop();
+        musicAudioSource.clip = audioClip;
+        musicAudioSource.Play();
+    }
+
+    public void StopBossMusic()
+    {
+        musicAudioSource = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
+        musicAudioSource.Stop();
+        musicAudioSource.clip = music;
+        musicAudioSource.Play();
+    }
+
+    public void ActiveFigthingBossUI(EnemyHealthBarScript healthBarScript, string name)
+    {
+        PanelBoss.SetActive(true);
+        healthBarScript.IsBoss = true;
+        healthBarScript.Txt = healthBarBossText;
+        healthBarScript.fillBar.enabled = false;
+        healthBarScript.FillBarParent.enabled = false;
+        healthBarScript.fillBar = bossFillBar;
+        bossName.text = name;
     }
 }

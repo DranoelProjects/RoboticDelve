@@ -16,6 +16,9 @@ public class EnemyAI : MonoBehaviour
     public float minDistance = 1f;
     public float detRange = 5f, attackRange=1f, AttackCouldown=0.5f;
     [SerializeField] public float healthpoints = 10f, healthpointsMax = 10f, Damage = 1f;
+    [SerializeField] float attackColliderRadius = 0.7f;
+    [SerializeField] bool isBoss = false;
+    [SerializeField] string bossName = "Demon Boss";
 
     Path path;
     int currentWaypoint = 0;
@@ -30,12 +33,16 @@ public class EnemyAI : MonoBehaviour
     float colliderRadius;
 
     //Sounds
-    [SerializeField] AudioClip sndAttack, sndDead;
+    [SerializeField] AudioClip sndAttack, sndDead, sndBoss;
     AudioSource audioSource;
+    bool isBossMusicPlaying;
 
+    //UI
+    UIScript uiScript;
 
     private void Awake()
     {
+        uiScript = GameObject.Find("MainCanvas").GetComponent<UIScript>();
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponentInChildren<AudioSource>();
     }
@@ -96,13 +103,23 @@ public class EnemyAI : MonoBehaviour
             if (length < detRange)
             {
                 pDetected = true;
+                if (isBoss)
+                {
+                    detRange = 10000f;
+                    if (!isBossMusicPlaying)
+                    {
+                        isBossMusicPlaying = true;
+                        uiScript.PlayBossMusic(sndBoss);
+                        uiScript.ActiveFigthingBossUI(gameObject.GetComponentInChildren<EnemyHealthBarScript>(), bossName);
+                    }
+                }
                 if(!OnAttack && length < attackRange && nearestPlayerScript.healthpoints > 0)
                 {
                     OnAttack = true;
                     audioSource.PlayOneShot(sndAttack);
                     animator.SetTrigger("Attack");
                     colliderRadius = circleCollider2D.radius;
-                    circleCollider2D.radius = 0.7f;
+                    circleCollider2D.radius = attackColliderRadius;
                     StartCoroutine(AttackBool());  
                 }
             }
@@ -197,6 +214,8 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
+        uiScript.StopBossMusic();
+        uiScript.PanelBoss.SetActive(false);
     }
 
 }
