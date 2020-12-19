@@ -1,44 +1,87 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using System.Linq;
+using System;
 
 public class EnemyAI : MonoBehaviour
 {
     public Transform sprite;
     private Transform target;
     private GameObject[] player;
+    GameObject nearestPlayer;
+    PlayerScript nearestPlayerScript;
     public float speed = 200f;
     public float newWaypointDistance = .5f;
-    public float minDistance = 2f;
-    public float detRange = 10f;
-    [SerializeField] public float healthpoints = 10;
-    [SerializeField] public float healthpointsMax = 10;
+    public float minDistance = 1f;
+    public float detRange = 5f, attackRange=1f, AttackCouldown=0.5f;
+    [SerializeField] public float healthpoints = 10f, healthpointsMax = 10f, Damage = 1f;
 
     Path path;
     int currentWaypoint = 0;
-    bool reachedEndOfPath = false, pDetected = false, targetReachable = false;
+    bool reachedEndOfPath = false, pDetected = false, targetReachable = false, isDead = false;
+    public bool ShouldUpdatePlayerArray = true, OnAttack = false;
 
     Seeker seeker;
     Rigidbody2D rb;
-     
+    Animator animator;
+    CircleCollider2D circleCollider2D;
+    Rigidbody2D rigidbody2D;
+    float colliderRadius;
+
+    //Sounds
+    [SerializeField] AudioClip sndAttack, sndDead;
+    AudioSource audioSource;
+
+
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        circleCollider2D = GetComponent<CircleCollider2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectsWithTag("Player");
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
 
     void UpdatePath()
     {
-        if (seeker.IsDone())
+        if (seeker.IsDone() && !isDead)
         {
-            //a modifier pour target le joueur ou robot le plus proche
-            target = player[0].GetComponent<Transform>();
+            if (ShouldUpdatePlayerArray)
+            {
+                GameObject[] tag1 = GameObject.FindGameObjectsWithTag("Player");
+                GameObject[] tag2 = GameObject.FindGameObjectsWithTag("Robot");
+                player = tag1.Concat(tag2).ToArray();
+                ShouldUpdatePlayerArray = false;
+            }
+            //checking nearest target
+            float lastDistance = 10000f;
+            foreach (GameObject currentPlayer in player)
+            {
+                float currentDistance = Vector2.Distance(currentPlayer.transform.position, gameObject.transform.position);
+                if (lastDistance > currentDistance)
+                {
+                    lastDistance = currentDistance;
+                    target = currentPlayer.transform;
+                    nearestPlayer = currentPlayer;
+                    nearestPlayerScript = nearestPlayer.GetComponent<PlayerScript>();
+                }
+            }
+
             seeker.StartPath(rb.position, target.position, onPathComplete);
-            float length = path.GetTotalLength();
+            float length = 10f;
+            if (path != null)
+            {
+                length = path.GetTotalLength();
+            }
+
             for (int i = 1; i < player.Length; i++)
             {
                 Transform temp = player[i].GetComponent<Transform>();
@@ -51,9 +94,22 @@ public class EnemyAI : MonoBehaviour
                 }
             }
             if (length < detRange)
+            {
                 pDetected = true;
+                if(!OnAttack && length < attackRange && nearestPlayerScript.healthpoints > 0)
+                {
+                    OnAttack = true;
+                    audioSource.PlayOneShot(sndAttack);
+                    animator.SetTrigger("Attack");
+                    colliderRadius = circleCollider2D.radius;
+                    circleCollider2D.radius = 0.7f;
+                    StartCoroutine(AttackBool());  
+                }
+            }
             else
+            {
                 pDetected = false;
+            }
             if (!pDetected)
             {
                 //select a random point within a range that is not a wall (ispathpossible) patrol logic
@@ -63,6 +119,13 @@ public class EnemyAI : MonoBehaviour
                 //}
             }
         }
+    }
+
+    IEnumerator AttackBool()
+    {
+        yield return new WaitForSeconds(AttackCouldown);
+        OnAttack = false;
+        circleCollider2D.radius = colliderRadius;
     }
 
     void onPathComplete(Path p)
@@ -75,35 +138,39 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        if (path == null)
-            return;
-        if (currentWaypoint >= path.vectorPath.Count)
+        if (!isDead)
         {
-            reachedEndOfPath = true;
-            return;
+            if (path == null)
+                return;
+            if (currentWaypoint >= path.vectorPath.Count)
+            {
+                reachedEndOfPath = true;
+                return;
+            }
+            else
+                reachedEndOfPath = false;
+            if (Vector2.Distance(rb.position, target.position) < minDistance || !pDetected || nearestPlayerScript.healthpoints < 0)
+            {
+                rb.velocity = new Vector2(0, 0);
+                animator.SetFloat("SpeedX", 0f);
+                return;
+            }
+            Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+            Vector2 newVelocity = direction * speed * Time.deltaTime;
+
+            rb.velocity = newVelocity;
+            animator.SetFloat("SpeedX", 1f);
+            float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+            if (distance < newWaypointDistance)
+                currentWaypoint++;
+
+            if (direction.x > 0 && sprite.localScale.x < 0)
+                Flip();
+            if (direction.x < 0 && sprite.localScale.x > 0)
+                Flip();
         }
-        else
-            reachedEndOfPath = false;
-        if (Vector2.Distance(rb.position, target.position) < minDistance)
-        {
-            rb.velocity = new Vector2(0, 0);
-            return;
-        }
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        Vector2 newVelocity = direction * speed * Time.deltaTime;
-
-        rb.velocity = newVelocity;
-
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-        if (distance < newWaypointDistance)
-            currentWaypoint++;
-
-        if (direction.x > 0 && sprite.localScale.x < 0)
-            Flip();
-        if (direction.x < 0 && sprite.localScale.x > 0)
-            Flip();
     }
 
     void Flip()
@@ -112,4 +179,24 @@ public class EnemyAI : MonoBehaviour
         theLocalScale.x *= -1;
         sprite.localScale = theLocalScale;
     }
+
+    public void Hurt()
+    {
+        Vector2 move = gameObject.transform.position - transform.position;
+        rigidbody2D.AddForce(move.normalized * -200);
+        if (healthpoints < 0)
+        {
+            Destroy(circleCollider2D);
+            audioSource.PlayOneShot(sndDead);
+            isDead = true;
+            animator.SetTrigger("Fall");
+            StartCoroutine(Dead());
+        }
+    }
+    IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
+
 }

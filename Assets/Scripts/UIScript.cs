@@ -8,7 +8,7 @@ public class UIScript : MonoBehaviour
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
         copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber;
     public GameObject PanelInventory, PanelPause;
-    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList;
+    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat;
     InventoryManager inventoryManager;
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource, canvasAudioSource;
@@ -148,5 +148,10 @@ public class UIScript : MonoBehaviour
     {
         canvasAudioSource.volume = soundsEffectsVolume;
         canvasAudioSource.PlayOneShot(sndBtnClicked);
+    }
+
+    public void ShowDefeatPanel()
+    {
+        panelDefeat.SetActive(!panelDefeat.activeInHierarchy);
     }
 }

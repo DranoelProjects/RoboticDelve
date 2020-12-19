@@ -17,16 +17,9 @@ public class HealthBarScript : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealthPoints()
     {
-        
-        healthPoints = player.healthpoints/player.healthpointsMax;
+        healthPoints = player.healthpoints / player.healthpointsMax;
         fillBar.fillAmount = healthPoints;
-        
-        // ChangeCharacter();
-        
     }
-
-    
 }

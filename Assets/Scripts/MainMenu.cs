@@ -46,6 +46,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayButtonClickedSound();
         SceneManager.LoadScene("MapDisplay");
+        Time.timeScale = 1;
     }
 
     public void QuitGame()

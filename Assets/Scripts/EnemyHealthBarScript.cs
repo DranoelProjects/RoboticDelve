@@ -24,8 +24,7 @@ public class EnemyHealthBarScript : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealthPoints()
     {
         EnemyhealthPoints = enemy.healthpoints/enemy.healthpointsMax;
         // healthPoints = 0.6f;
