@@ -1594,8 +1594,8 @@ MonoBehaviour:
   Damage: 1
   ShouldUpdatePlayerArray: 1
   OnAttack: 0
-  sndAttack: {fileID: 8300000, guid: 5040f9dcc38cf42429fc9725c089b2e1, type: 3}
-  sndDead: {fileID: 8300000, guid: ec6914e095090ea4093842c9cbc056de, type: 3}
+  sndAttack: {fileID: 8300000, guid: cf37ec11fbd644641ba3c0c9c23ab9bd, type: 3}
+  sndDead: {fileID: 8300000, guid: c0133eff9c2ab6e46b099eaf92ddb62b, type: 3}
 --- !u!114 &780975665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3566,8 +3566,8 @@ MonoBehaviour:
   Damage: 1
   ShouldUpdatePlayerArray: 1
   OnAttack: 0
-  sndAttack: {fileID: 8300000, guid: 5040f9dcc38cf42429fc9725c089b2e1, type: 3}
-  sndDead: {fileID: 8300000, guid: ec6914e095090ea4093842c9cbc056de, type: 3}
+  sndAttack: {fileID: 8300000, guid: ffb5bad34c38561439227d5f2ff952aa, type: 3}
+  sndDead: {fileID: 8300000, guid: 03f32c6d938f4c74ba704e3f3cf880c5, type: 3}
 --- !u!114 &1398214878
 MonoBehaviour:
   m_ObjectHideFlags: 0
