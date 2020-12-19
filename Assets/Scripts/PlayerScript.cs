@@ -195,10 +195,9 @@ public class PlayerScript : MonoBehaviour
 
     public void Hurt(float damage, Collision2D col)
     {
-        //animator.SetTrigger("Hurt");
+        animator.SetTrigger("Hurt");
         Vector2 move = col.transform.position - transform.position;
         m_rigidBody2D.AddForce(move.normalized * -200);
-        //audioSource.PlayOneShot(sndHurt);
         healthpoints -= damage;
         healthBarScript.UpdateHealthPoints();
         if (healthpoints <= 0) DeathPlayer();

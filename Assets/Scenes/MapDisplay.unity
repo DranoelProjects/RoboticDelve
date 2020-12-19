@@ -175,9 +175,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4}
+  m_Offset: {x: -0.05023825, y: -1.17}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.34066737
 --- !u!114 &17900727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,12 +195,12 @@ MonoBehaviour:
   newWaypointDistance: 3
   minDistance: 1
   detRange: 7
-  attackRange: 1
+  attackRange: 1.5
   AttackCouldown: 1
   healthpoints: 20
   healthpointsMax: 20
   Damage: 2
-  attackColliderRadius: 0.9
+  attackColliderRadius: 1.5
   isBoss: 1
   bossName: Demon Boss
   ShouldUpdatePlayerArray: 1
@@ -2297,7 +2297,7 @@ PrefabInstance:
     - target: {fileID: 2679698231642322015, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.21266627
+      value: -0.18043135
       objectReference: {fileID: 0}
     - target: {fileID: 2679698231642322015, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
@@ -2444,7 +2444,7 @@ PrefabInstance:
     - target: {fileID: 2679698233047338625, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.21266627
+      value: -0.18043135
       objectReference: {fileID: 0}
     - target: {fileID: 2679698233047338625, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}

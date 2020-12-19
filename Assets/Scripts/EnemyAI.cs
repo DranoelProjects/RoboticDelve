@@ -199,6 +199,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Hurt()
     {
+        animator.SetTrigger("Hurt");
         Vector2 move = gameObject.transform.position - transform.position;
         rigidbody2D.AddForce(move.normalized * -200);
         if (healthpoints <= 0)
