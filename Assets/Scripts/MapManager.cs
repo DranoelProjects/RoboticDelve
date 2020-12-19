@@ -24,7 +24,9 @@ public class MapManager : MonoBehaviour
     {
         //Generation
         Application.targetFrameRate = 60;
-        m_metaMap = generationDuBled(m_mapSize);
+        //WFC generator = new WFC(m_mapSize, m_mapSize);
+        //m_metaMap = generationDuBled(m_mapSize);
+        m_metaMap = new int[,]{ };
         m_genmapWidth = m_genmapHeight = m_mapWidth = m_mapHeight = m_mapSize;
         updateTileMap();
 
