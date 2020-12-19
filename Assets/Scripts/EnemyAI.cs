@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     Path path;
     int currentWaypoint = 0;
     bool reachedEndOfPath = false, pDetected = false, targetReachable = false, isDead = false;
-    public bool ShouldUpdatePlayerArray = true, OnAttack = false;
+    public bool ShouldUpdatePlayerArray = false, OnAttack = false, IsRanged = false;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -40,11 +40,20 @@ public class EnemyAI : MonoBehaviour
     //UI
     UIScript uiScript;
 
+    [Header("Ranged Settings")]
+    [SerializeField] LayerMask layer;
+    [SerializeField] GameObject arrow;
+    [SerializeField] float shootForce = 250f, timeShooting = 0.4f; 
+
     private void Awake()
     {
         uiScript = GameObject.Find("MainCanvas").GetComponent<UIScript>();
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponentInChildren<AudioSource>();
+        GameObject[] tag1 = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] tag2 = GameObject.FindGameObjectsWithTag("Robot");
+        player = tag1.Concat(tag2).ToArray();
+        nearestPlayer = player[0];
     }
 
     // Start is called before the first frame update
@@ -118,8 +127,17 @@ public class EnemyAI : MonoBehaviour
                     OnAttack = true;
                     audioSource.PlayOneShot(sndAttack);
                     animator.SetTrigger("Attack");
-                    colliderRadius = circleCollider2D.radius;
-                    circleCollider2D.radius = attackColliderRadius;
+                    if (IsRanged)
+                    {
+                        //IA Fire
+                        Vector2 rayDir = target.position;
+                        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDir, attackRange, layer);
+                        StartCoroutine(Arrow());
+                    } else
+                    {
+                        colliderRadius = circleCollider2D.radius;
+                        circleCollider2D.radius = attackColliderRadius;
+                    }
                     StartCoroutine(AttackBool());  
                 }
             }
@@ -143,6 +161,12 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(AttackCouldown);
         OnAttack = false;
         circleCollider2D.radius = colliderRadius;
+    }
+
+    IEnumerator Arrow()
+    {
+        yield return new WaitForSeconds(timeShooting);
+        shootArrow();
     }
 
     void onPathComplete(Path p)
@@ -217,6 +241,21 @@ public class EnemyAI : MonoBehaviour
         Destroy(gameObject);
         uiScript.StopBossMusic();
         uiScript.PanelBoss.SetActive(false);
+    }
+
+    private void shootArrow()
+    {
+        target = nearestPlayer.transform;
+        float arrowFlipVal = target.position.x - transform.position.x;
+        GameObject b = Instantiate(arrow, transform.position, Quaternion.identity);
+        if (arrowFlipVal < 0)
+        {
+            Vector3 theLocalScale = b.transform.localScale;
+            theLocalScale.x *= -1;
+            b.transform.localScale = theLocalScale;
+        }
+        Vector2 dir = target.position;
+        b.GetComponent<Rigidbody2D>().AddForce(dir * shootForce);
     }
 
 }

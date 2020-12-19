@@ -156,11 +156,11 @@ public class PlayerScript : MonoBehaviour
                 }
                 if (enemyAI.OnAttack)
                 {
-                    if (!alreadyHurt)
+                    if (!alreadyHurt && !enemyAI.IsRanged)
                     {
                         alreadyHurt = true;
-                        audioSource.PlayOneShot(sndHurt);
-                        Hurt(enemyAI.Damage, collision);
+                        Vector2 move = collision.transform.position - transform.position;
+                        Hurt(enemyAI.Damage, move);
                         StartCoroutine(HurtBool(enemyAI.AttackCouldown));
                     }
                 }
@@ -172,7 +172,6 @@ public class PlayerScript : MonoBehaviour
 
     void DeathPlayer()
     {
-        Destroy(gameObject.GetComponent<CircleCollider2D>());
         audioSource.PlayOneShot(sndDead);
         animator.SetTrigger("Fall");
         CanMoove = false;
@@ -193,10 +192,10 @@ public class PlayerScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void Hurt(float damage, Collision2D col)
+    public void Hurt(float damage, Vector2 move)
     {
+        audioSource.PlayOneShot(sndHurt);
         animator.SetTrigger("Hurt");
-        Vector2 move = col.transform.position - transform.position;
         m_rigidBody2D.AddForce(move.normalized * -200);
         healthpoints -= damage;
         healthBarScript.UpdateHealthPoints();

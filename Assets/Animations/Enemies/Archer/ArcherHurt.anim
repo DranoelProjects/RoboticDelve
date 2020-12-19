@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SlimeHurt
+  m_Name: ArcherHurt
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,13 +20,14 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 812f62553a228514e9680d677913e5ea, type: 3}
-    - time: 0.11666667
-      value: {fileID: 21300000, guid: 5282c7d03b7367746bd4ab2873d15bc5, type: 3}
-    - time: 0.25
-      value: {fileID: 21300000, guid: 135fd1266556c3943bdbc29b03f25874, type: 3}
-    - time: 0.36666667
-      value: {fileID: 21300000, guid: a877eb9369117e942870589290f35ddf, type: 3}
+      value: {fileID: 830680230883465780, guid: 6fd95499da1479f4782d6966ced85d10,
+        type: 3}
+    - time: 0.3
+      value: {fileID: 6596258498841548387, guid: 6fd95499da1479f4782d6966ced85d10,
+        type: 3}
+    - time: 0.5833333
+      value: {fileID: -4147321062969920389, guid: 6fd95499da1479f4782d6966ced85d10,
+        type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,16 +47,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 812f62553a228514e9680d677913e5ea, type: 3}
-    - {fileID: 21300000, guid: 5282c7d03b7367746bd4ab2873d15bc5, type: 3}
-    - {fileID: 21300000, guid: 135fd1266556c3943bdbc29b03f25874, type: 3}
-    - {fileID: 21300000, guid: a877eb9369117e942870589290f35ddf, type: 3}
+    - {fileID: 830680230883465780, guid: 6fd95499da1479f4782d6966ced85d10, type: 3}
+    - {fileID: 6596258498841548387, guid: 6fd95499da1479f4782d6966ced85d10, type: 3}
+    - {fileID: -4147321062969920389, guid: 6fd95499da1479f4782d6966ced85d10, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.38333336
+    m_StopTime: 0.59999996
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

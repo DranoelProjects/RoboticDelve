@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SlimeHurt
+  m_Name: ArcherIdle
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,13 +20,11 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 812f62553a228514e9680d677913e5ea, type: 3}
-    - time: 0.11666667
-      value: {fileID: 21300000, guid: 5282c7d03b7367746bd4ab2873d15bc5, type: 3}
-    - time: 0.25
-      value: {fileID: 21300000, guid: 135fd1266556c3943bdbc29b03f25874, type: 3}
-    - time: 0.36666667
-      value: {fileID: 21300000, guid: a877eb9369117e942870589290f35ddf, type: 3}
+      value: {fileID: -7665798452422916851, guid: 299a29b7d3c57f2499058eebe682b0e7,
+        type: 3}
+    - time: 0.21666667
+      value: {fileID: -9211012975226712646, guid: 299a29b7d3c57f2499058eebe682b0e7,
+        type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,16 +44,14 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 812f62553a228514e9680d677913e5ea, type: 3}
-    - {fileID: 21300000, guid: 5282c7d03b7367746bd4ab2873d15bc5, type: 3}
-    - {fileID: 21300000, guid: 135fd1266556c3943bdbc29b03f25874, type: 3}
-    - {fileID: 21300000, guid: a877eb9369117e942870589290f35ddf, type: 3}
+    - {fileID: -7665798452422916851, guid: 299a29b7d3c57f2499058eebe682b0e7, type: 3}
+    - {fileID: -9211012975226712646, guid: 299a29b7d3c57f2499058eebe682b0e7, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.38333336
+    m_StopTime: 0.23333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
