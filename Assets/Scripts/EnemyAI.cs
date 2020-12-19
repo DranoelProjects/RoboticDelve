@@ -245,17 +245,9 @@ public class EnemyAI : MonoBehaviour
 
     private void shootArrow()
     {
-        target = nearestPlayer.transform;
-        float arrowFlipVal = target.position.x - transform.position.x;
-        GameObject b = Instantiate(arrow, transform.position, Quaternion.identity);
-        if (arrowFlipVal < 0)
-        {
-            Vector3 theLocalScale = b.transform.localScale;
-            theLocalScale.x *= -1;
-            b.transform.localScale = theLocalScale;
-        }
-        Vector2 dir = target.position;
-        b.GetComponent<Rigidbody2D>().AddForce(dir * shootForce);
+        GameObject arrowInstance = Instantiate(arrow, transform.position, Quaternion.identity);
+        arrowInstance.transform.parent = gameObject.transform;
+        arrowInstance.GetComponent<ArrowScript>().TargetPos = nearestPlayer.transform.position;
     }
 
 }

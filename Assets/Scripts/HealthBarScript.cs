@@ -21,7 +21,11 @@ public class HealthBarScript : MonoBehaviour
     public void UpdateHealthPoints()
     {
         healthPoints = player.healthpoints / player.healthpointsMax;
-        txt.text = (healthPoints * 100) + " %";
+        if (healthPoints >= 0)
+        {
+            txt.text = (healthPoints * 100) + " %";
+        }
+
         fillBar.fillAmount = healthPoints;
         if(healthPoints < 0.4f)
         {
