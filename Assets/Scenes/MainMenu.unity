@@ -1561,7 +1561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderMusic: {fileID: 6205820577245563888}
   sliderSoundsEffects: {fileID: 5244748488537163120}
-  sndBtnClicked: {fileID: 8300000, guid: 977d01f3c63cc0141a2d5d62044affd5, type: 3}
+  sndBtnClicked: {fileID: 8300000, guid: ae7b09337fe0b1a4598af945ebd73245, type: 3}
 --- !u!82 &439691260
 AudioSource:
   m_ObjectHideFlags: 0

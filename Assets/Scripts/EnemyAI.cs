@@ -226,9 +226,8 @@ public class EnemyAI : MonoBehaviour
         animator.SetTrigger("Hurt");
         Vector2 move = gameObject.transform.position - transform.position;
         rigidbody2D.AddForce(move.normalized * -200);
-        if (healthpoints <= 0)
+        if (healthpoints <= 0 && !isDead)
         {
-            Destroy(circleCollider2D);
             audioSource.PlayOneShot(sndDead);
             isDead = true;
             animator.SetTrigger("Fall");
