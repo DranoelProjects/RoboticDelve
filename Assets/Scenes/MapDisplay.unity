@@ -196,7 +196,7 @@ MonoBehaviour:
   minDistance: 1
   detRange: 7
   attackRange: 1
-  AttackCouldown: 0.5
+  AttackCouldown: 1
   healthpoints: 20
   healthpointsMax: 20
   Damage: 2
@@ -205,8 +205,8 @@ MonoBehaviour:
   bossName: Demon Boss
   ShouldUpdatePlayerArray: 1
   OnAttack: 0
-  sndAttack: {fileID: 8300000, guid: ffb5bad34c38561439227d5f2ff952aa, type: 3}
-  sndDead: {fileID: 8300000, guid: 03f32c6d938f4c74ba704e3f3cf880c5, type: 3}
+  sndAttack: {fileID: 8300000, guid: 03716369b6d66c949810385998a047c9, type: 3}
+  sndDead: {fileID: 8300000, guid: af79b0dd71ae73849bfff2a42a2e111e, type: 3}
   sndBoss: {fileID: 8300000, guid: 301908ce092b54a1ab059af6f2e2a728, type: 3}
 --- !u!114 &17900728
 MonoBehaviour:
@@ -2297,7 +2297,7 @@ PrefabInstance:
     - target: {fileID: 2679698231642322015, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.18043135
+      value: -0.21266627
       objectReference: {fileID: 0}
     - target: {fileID: 2679698231642322015, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
@@ -2444,7 +2444,7 @@ PrefabInstance:
     - target: {fileID: 2679698233047338625, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.18043135
+      value: -0.21266627
       objectReference: {fileID: 0}
     - target: {fileID: 2679698233047338625, guid: da1e34b43250a0049bd26ee37ffa65e8,
         type: 3}

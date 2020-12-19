@@ -201,7 +201,7 @@ public class EnemyAI : MonoBehaviour
     {
         Vector2 move = gameObject.transform.position - transform.position;
         rigidbody2D.AddForce(move.normalized * -200);
-        if (healthpoints < 0)
+        if (healthpoints <= 0)
         {
             Destroy(circleCollider2D);
             audioSource.PlayOneShot(sndDead);

@@ -26,7 +26,7 @@ public class EnemyHealthBarScript : MonoBehaviour
     public void UpdateHealthPoints()
     {
         EnemyhealthPoints = enemy.healthpoints/enemy.healthpointsMax;
-        if (IsBoss)
+        if (IsBoss && EnemyhealthPoints>=0)
         {
             Txt.text = (EnemyhealthPoints * 100) + " %";
         }
