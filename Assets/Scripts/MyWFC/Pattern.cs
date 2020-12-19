@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Pattern
 {
-    int id;
+    int id, type;
     int[] freqTot;
     int[,] pattern;
     List<int>[] adjRules, hintFreq;
 
-    public Pattern(int[,] pat, int idtf)
+    public Pattern(int[,] pat, int idtf, int patType)
     {
         pattern = pat;
         id = idtf;
+        type = patType % 8;
         adjRules = new List<int>[8];
         hintFreq = new List<int>[8];
         for (int i = 0; i < 8; i++)
@@ -62,6 +63,43 @@ public class Pattern
             hintFreq[i].Add(1);
         }
     }
+
+    //public Pattern FlipPattern(int i)
+    //{
+    //    Pattern flipPat = new Pattern(this.Flip(this.pattern, 3), i);
+    //    flipPat
+    //}
+
+    private Pattern Flip(int n)
+    {
+        int[,] temp = new int[n, n];
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                temp[i, j] = pattern[n - i - 1, j];
+            }
+        }
+        Pattern ret = new Pattern(temp, 0, type + 4);
+        return ret;
+    }
+
+    private int[,] Rotate(int[,] mat, int n, int nbRot)
+    {
+        int[,] ret = new int[n, n];
+        for (int r = 0; r < nbRot; r++)
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    ret[i, j] = mat[n - j - 1, i];
+                }
+            }
+        }
+        return ret;
+    }
+
     public List<int> getRuleI(int i)
     {
         return adjRules[i];
@@ -87,5 +125,10 @@ public class Pattern
     public int getTile()
     {
         return pattern[1, 1];
+    }
+
+    public int getType()
+    {
+        return type;
     }
 }

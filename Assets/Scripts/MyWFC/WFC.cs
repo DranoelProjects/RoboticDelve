@@ -82,47 +82,76 @@ public class WFC : MonoBehaviour
         patternFreq = new List<int>();
         patternRef = new List<List<int[]>>();
         patternMap = new int[pM, pN];
+        for (int j = 0; j < pM; j++)
+        {
+            for (int i = 0; i < pN; i++)
+            {
+                patternMap[j, i] = -1;
+            }
+        }
         for (int i = 0; i < iN; i++)
         {
             for (int j = 0; j < iM; j++)
             {
                 //Get the pattern at the current position
                 int[,] pattern = PatternAt(i, j);
-                //A déplacer
+                RecordPattern(pattern, i, j, 0);
+                for (int t = 1; t < 4; t++)
+                {
+                    RecordPattern(this.Rotate(pattern, 3, t), i, j, t);
+                }
                 //Create a flipped version
                 int[,] patternFlip = Flip(pattern, 3);
-                //Record every rotation of both of them
-                for (int k = 0; k < 4; k++)
+                if (!this.isEqual(pattern, patternFlip))
                 {
-                    RecordPattern(pattern, i, j);
-                    RecordPattern(patternFlip, i, j);
-                    pattern = Rotate(pattern, 3);
-                    patternFlip = Rotate(patternFlip, 3);
+                    for (int t = 0; t < 4; t++)
+                    {
+                        RecordPattern(this.Rotate(patternFlip, 3, t), i, j, t + 4);
+                    }
                 }
             }
         }
+        //Debug
+        Debug.Log(displayText(patternMap));
         freqTot = 0;
         foreach (int freq in patternFreq)
         {
             freqTot += freq;
         }
 
+        //foreach (Pattern pat in patternList)
+        //{
+        //    Debug.Log(pat.getId());
+        //    Debug.Log(pat.getType());
+        //    Debug.Log(displayText(pat.getPattern()));
+        //}
+
         //Adjency rules and frequency hints
         Debug.Log(patternMap.GetLength(1) + ":" + patternMap.GetLength(0));
         foreach (Pattern pat in patternList)
         {
-            //Si la version flip ou rotate n'existe pas dans la liste, les créer et mettre un bouléen vrai pour ajouter les règles correspondantes
-            int index = patternList.FindIndex(p => p.getPattern() == pat.getPattern());
+            //Debug.Log("ID: " + pat.getId());
+            //Debug.Log("Type: " + pat.getType());
+            //Debug.Log(displayText(pat.getPattern()));
+            int index = patternList.FindIndex(p => isEqual(p.getPattern(), pat.getPattern()));
             foreach (int[] position in patternRef[index])
             {
-                pat.addRule(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]], 0);
-                pat.addRule(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]], 1);
-                pat.addRule(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]], 2);
-                pat.addRule(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]], 3);
-                pat.addRule(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]], 4);
-                pat.addRule(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]], 5);
-                pat.addRule(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]], 6);
-                pat.addRule(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]], 7);
+                if (pat.getType() == 0)
+                    AddAdj0(pat, position);
+                else if (pat.getType() == 1)
+                    AddAdj1(pat, position);
+                else if (pat.getType() == 2)
+                    AddAdj2(pat, position);
+                else if (pat.getType() == 3)
+                    AddAdj3(pat, position);
+                else if (pat.getType() == 4)
+                    AddAdj4(pat, position);
+                else if (pat.getType() == 5)
+                    AddAdj5(pat, position);
+                else if (pat.getType() == 6)
+                    AddAdj6(pat, position);
+                else if (pat.getType() == 7)
+                    AddAdj7(pat, position);
             }
             pat.calcFreq();
         }
@@ -144,7 +173,7 @@ public class WFC : MonoBehaviour
             }
         }
         maxTotEnt = CalculateTotalEntropy();
-        Debug.Log("Test1");
+        Debug.Log(maxTotEnt);
         //Apply algorithm
         GenerateMap();
 
@@ -168,9 +197,104 @@ public class WFC : MonoBehaviour
         //}
     }
 
+    public void AddAdj0(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]], 0);
+        pat.addRule(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]], 1);
+        pat.addRule(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]], 2);
+        pat.addRule(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]], 3);
+        pat.addRule(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]], 4);
+        pat.addRule(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]], 5);
+        pat.addRule(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]], 6);
+        pat.addRule(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]], 7);
+    }
+
+    public void AddAdj1(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 1))), 2);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]].getPattern(), 3, 1))), 4);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 1))), 7);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 1))), 1);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 1))), 6);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 1))), 0);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]].getPattern(), 3, 1))), 3);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 1))), 5);
+    }
+
+    public void AddAdj2(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 2))), 7);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]].getPattern(), 3, 2))), 6);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 2))), 5);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 2))), 4);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 2))), 3);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 2))), 2);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]].getPattern(), 3, 2))), 1);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 2))), 0);
+    }
+
+    public void AddAdj3(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 3))), 5);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]].getPattern(), 3, 3))), 3);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 3))), 0);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 3))), 6);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 3))), 1);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3, 3))), 7);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]].getPattern(), 3, 3))), 4);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3, 3))), 2);
+    }
+
+    public void AddAdj4(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3))), 2);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]].getPattern(), 3))), 1);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3))), 0);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3))), 4);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3))), 3);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3))), 7);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]].getPattern(), 3))), 6);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3))), 5);
+    }
+
+    public void AddAdj5(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 1))), 7);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]].getPattern(), 3), 3, 1))), 4);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 1))), 2);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 1))), 6);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 1))), 1);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 1))), 5);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]].getPattern(), 3), 3, 1))), 3);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 1))), 0);
+    }
+
+    public void AddAdj6(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 2))), 5);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]].getPattern(), 3), 3, 2))), 6);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 2))), 7);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 2))), 3);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 2))), 4);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 2))), 0);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]].getPattern(), 3), 3, 2))), 1);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 2))), 2);
+    }
+
+    public void AddAdj7(Pattern pat, int[] position)
+    {
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 3))), 0);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, position[0]]].getPattern(), 3), 3, 3))), 3);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] - 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 3))), 5);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[position[1] % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 3))), 1);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[position[1] % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 3))), 6);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] - 1 + iN) % iN]].getPattern(), 3), 3, 3))), 2);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, position[0]]].getPattern(), 3), 3, 3))), 4);
+        pat.addRule(patternList.Find(p => isEqual(p.getPattern(), Rotate(Flip(patternList[patternMap[(position[1] + 1 + iM) % iM, (position[0] + 1 + iN) % iN]].getPattern(), 3), 3, 3))), 7);
+    }
+
     public void GenerateMap()
     {
-        Debug.Log("Test 2");
         //Choose a random starting point in case multiple tiles have the same low entropy
         int x = (int)myRand.Next(oN);
         int y = (int)myRand.Next(oM);
@@ -188,7 +312,6 @@ public class WFC : MonoBehaviour
         }
         int entropy = entropyMap[y, x];
         int nbPat = outputPattern[0, 0].Length;
-        Debug.Log("Test 3");
         //Gen loop
         while (!isGen())
         {
@@ -196,11 +319,9 @@ public class WFC : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("Test W1");
             //If the pattern is already set, retry with another tile
             if (entropyMap[y, x] == 0)
             {
-                Debug.Log("Test W1Sub1");
                 entropy = outputPattern[y, x].Length;
                 for (int j = 0; j < oM; j++)
                 {
@@ -216,21 +337,26 @@ public class WFC : MonoBehaviour
                 }
                 continue;
             }
-            Debug.Log("Test W2");
-            int rngPat = (int)myRand.Next(entropy);
             //Set the pattern accordingly
-            int index = 0;
-            int trueIndex = -1;
-            for (int i = 0; i < nbPat; i++)
+            int freqLeft = 0;
+            for (int f = 0; f < patternFreq.Count; f++)
             {
-                if (outputPattern[y, x][i])
+                if (outputPattern[y,x][f])
                 {
-                    if (index == rngPat)
-                    {
-                        trueIndex = i;
-                    }
-                    index++;
+                    freqLeft += patternFreq[f];
                 }
+            }
+            int rngPatFreq = (int)myRand.Next(freqLeft);
+            int trueIndex = -1;
+            int freqCumulee = 0;
+            for (int i = 0; i < nbPat && trueIndex == -1; i++)
+            {
+                if (!outputPattern[y, x][i])
+                    continue;
+                if (freqCumulee < rngPatFreq)
+                    freqCumulee += patternFreq[i];
+                else
+                    trueIndex = i;
             }
             for (int i = 0; i < nbPat; i++)
             {
@@ -240,25 +366,24 @@ public class WFC : MonoBehaviour
                 }
                 entropyMap[y, x] = 0;
             }
-            Debug.Log("Test W3");
             //TODO propagate choice to surrounding tiles
             Propagate(x, y);
-            Debug.Log("Test W4");
         }
         output = CreateFinalMap();
+        Debug.Log(displayText(output));
     }
 
     int CalculateTotalEntropy()
     {
-        int entropy = 0;
+        int totalEntropy = 0;
         for (int j = 0; j < oM; j++)
         {
             for (int i = 0; i < oN; i++)
             {
-                entropy += CalculateEntropy(i, j);
+                totalEntropy += CalculateEntropy(i, j);
             }
         }
-        return entropy;
+        return totalEntropy;
     }
 
     int[,] CreateFinalMap()
@@ -410,7 +535,7 @@ public class WFC : MonoBehaviour
         {
             if (x > 0)
             {
-                if(modified[0])
+                if (modified[0])
                     Propagate(x - 1, y - 1);
             }
             if (modified[1])
@@ -470,23 +595,29 @@ public class WFC : MonoBehaviour
         return true;
     }
 
-    void RecordPattern(int[,] pattern, int i, int j)
+    void RecordPattern(int[,] pattern, int i, int j, int type)
     {
+        //if (pattern == new int[,]{ { 0, 0, 1}, { 0, 0, 0}, { 1, 0, 1} })
+        //{
+        //    Debug.Log(i + "," + j + ":" + type);
+        //}
         int index = patternList.FindIndex(p => p.isEqual(pattern));
         if (index != -1)
         {
             patternFreq[index]++;
-            patternRef[index].Add(new int[]{ i, j});
+            patternRef[index].Add(new int[] { i, j });
             patternMap[j, i] = index;
         }
         else
         {
-            patternList.Add(new Pattern(pattern, patternList.Count - 1));
+            patternList.Add(new Pattern(pattern, patternList.Count, type));
             patternFreq.Add(1);
             patternRef.Add(new List<int[]>());
             patternRef[patternRef.Count - 1].Add(new int[] { i, j });
-            patternMap[j, i] = patternList.Count - 1;
-
+            if (patternMap[j, i] == -1)
+            {
+                patternMap[j, i] = patternList.Count - 1;
+            }
         }
     }
 
@@ -518,16 +649,70 @@ public class WFC : MonoBehaviour
         }
         return ret;
     }
-    int[,] Rotate(int[,] mat, int n)
+
+    int[,] Rotate(int[,] mat, int n, int rotation)
     {
+        int[,] temp = new int[n, n];
         int[,] ret = new int[n, n];
+        CopyIn(temp, mat, n);
+        CopyIn(ret, mat, n);
+        //string debugTxt = "Rotation\n";
+        //debugTxt += displayText(temp);
+        for (int r = 0; r < rotation; r++)
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    ret[i, j] = temp[n - j - 1, i];
+                }
+            }
+            CopyIn(temp, ret, n);
+        }
+        //debugTxt += displayText(ret);
+        //Debug.Log(debugTxt);
+        return ret;
+    }
+
+    public bool isEqual(int[,] mat1, int[,] mat2)
+    {
+        bool equals = true;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (mat1[i, j] != mat2[i, j])
+                {
+                    equals = false;
+                }
+            }
+        }
+        return equals;
+    }
+
+    int[,] CopyIn(int[,] dest, int[,] origin, int n)
+    {
         for (int i = 0; i < n; ++i)
         {
             for (int j = 0; j < n; ++j)
             {
-                ret[i, j] = mat[n - j - 1, i];
+                dest[i, j] = origin[i, j];
             }
         }
-        return ret;
+        return dest;
+    }
+
+    string displayText(int[,] mat)
+    {
+        string sortie = "";
+        for (int j = 0; j < mat.GetLength(0); j++)
+        {
+            for (int i = 0; i < mat.GetLength(1); i++)
+            {
+                sortie += mat[j, i] + ",";
+            }
+            sortie += "\n";
+        }
+        return sortie;
     }
 }
