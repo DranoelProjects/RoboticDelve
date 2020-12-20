@@ -3015,7 +3015,7 @@ PrefabInstance:
     - target: {fileID: 3629852588586013625, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: AttackCouldown
-      value: 1.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013627, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}

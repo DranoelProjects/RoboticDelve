@@ -82,7 +82,7 @@ MonoBehaviour:
   minDistance: 0.8
   detRange: 5
   attackRange: 0.9
-  AttackCouldown: 1.5
+  AttackCouldown: 1
   healthpoints: 5
   healthpointsMax: 5
   Damage: 1
