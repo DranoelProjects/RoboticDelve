@@ -7,6 +7,7 @@ public class ExitScript : MonoBehaviour
 {
     InventoryManager inventoryManager;
     [SerializeField] AudioClip sndWinLevel;
+    [SerializeField] bool isTutorialScene = false;
     AudioSource audioSource;
     UIScript uiScript;
 
@@ -33,7 +34,14 @@ public class ExitScript : MonoBehaviour
     IEnumerator LoadScene()
     {
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (isTutorialScene)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
 }
