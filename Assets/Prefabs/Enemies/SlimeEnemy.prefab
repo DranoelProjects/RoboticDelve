@@ -79,17 +79,19 @@ MonoBehaviour:
   sprite: {fileID: 3629852588933087377}
   speed: 200
   newWaypointDistance: 3
-  minDistance: 1
+  minDistance: 0.8
   detRange: 5
-  attackRange: 1
-  AttackCouldown: 0.5
-  healthpoints: 10
-  healthpointsMax: 10
+  attackRange: 0.9
+  AttackCouldown: 1
+  healthpoints: 5
+  healthpointsMax: 5
   Damage: 1
-  attackColliderRadius: 0.7
+  AttackColliderRadius: 0.5
   isBoss: 0
   needToFlipOtherSide: 1
+  needToDropItem: 0
   bossName: Demon Boss
+  itemToDrop: {fileID: 0}
   ShouldUpdatePlayerArray: 1
   OnAttack: 0
   IsRanged: 0

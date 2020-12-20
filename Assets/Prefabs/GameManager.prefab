@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475ab56f5914b914581ff2ba5f6a4b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotPrefab: {fileID: 1308311274328708002, guid: 97d6fd50866a03d4a8aef4f3b6efe3e5,
+  robotPrefab: {fileID: 2274156846268991241, guid: 2c9ce8628ae68ee47bb58b5db614dc48,
     type: 3}
   scientist: {fileID: 0}

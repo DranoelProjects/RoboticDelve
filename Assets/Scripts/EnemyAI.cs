@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     public float minDistance = 1f;
     public float detRange = 5f, attackRange=1f, AttackCouldown=0.5f;
     [SerializeField] public float healthpoints = 10f, healthpointsMax = 10f, Damage = 1f;
-    [SerializeField] float attackColliderRadius = 0.7f;
+    public float AttackColliderRadius = 0.7f;
     [SerializeField] bool isBoss = false, needToFlipOtherSide = false, needToDropItem = false;
     [SerializeField] string bossName = "Demon Boss";
     [SerializeField] GameObject itemToDrop;
@@ -82,7 +82,16 @@ public class EnemyAI : MonoBehaviour
             float lastDistance = 10000f;
             foreach (GameObject currentPlayer in player)
             {
-                float currentDistance = Vector2.Distance(currentPlayer.transform.position, gameObject.transform.position);
+                float currentDistance;
+                try
+                {
+                     currentDistance = Vector2.Distance(currentPlayer.transform.position, gameObject.transform.position);
+                } catch(MissingReferenceException e)
+                {
+                    ShouldUpdatePlayerArray = true;
+                    return;
+                }
+
                 if (lastDistance > currentDistance)
                 {
                     lastDistance = currentDistance;
@@ -91,7 +100,7 @@ public class EnemyAI : MonoBehaviour
                     nearestPlayerScript = nearestPlayer.GetComponent<PlayerScript>();
                 }
             }
-
+            float distanceWithNearestPlayer = Vector2.Distance(nearestPlayer.transform.position, gameObject.transform.position);
             seeker.StartPath(rb.position, target.position, onPathComplete);
             float length = 10f;
             if (path != null)
@@ -101,8 +110,17 @@ public class EnemyAI : MonoBehaviour
 
             for (int i = 1; i < player.Length; i++)
             {
-                Transform temp = player[i].GetComponent<Transform>();
-                seeker.StartPath(rb.position, target.position, onPathComplete);
+                Transform temp;
+                try
+                {
+                   temp = player[i].GetComponent<Transform>();
+                }
+                catch (MissingReferenceException e)
+                {
+                    ShouldUpdatePlayerArray = true;
+                    return;
+                }
+                //seeker.StartPath(rb.position, target.position, onPathComplete);
                 float tempLength = path.GetTotalLength();
                 if (tempLength < length)
                 {
@@ -123,7 +141,8 @@ public class EnemyAI : MonoBehaviour
                         uiScript.ActiveFigthingBossUI(gameObject.GetComponentInChildren<EnemyHealthBarScript>(), bossName);
                     }
                 }
-                if(!OnAttack && length < attackRange && nearestPlayerScript.healthpoints > 0)
+                Debug.Log("On attack : " + OnAttack + " distance : " + distanceWithNearestPlayer + " attackRange : " + attackRange);
+                if(!OnAttack && distanceWithNearestPlayer < attackRange && nearestPlayerScript.healthpoints > 0f)
                 {
                     OnAttack = true;
                     audioSource.PlayOneShot(sndAttack);
@@ -137,7 +156,7 @@ public class EnemyAI : MonoBehaviour
                     } else
                     {
                         colliderRadius = circleCollider2D.radius;
-                        circleCollider2D.radius = attackColliderRadius;
+                        circleCollider2D.radius = AttackColliderRadius;
                     }
                     StartCoroutine(AttackBool());  
                 }
@@ -161,6 +180,7 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(AttackCouldown);
         OnAttack = false;
+        Debug.Log("OnAttackShouldBeFalse");
         circleCollider2D.radius = colliderRadius;
     }
 
@@ -193,12 +213,21 @@ public class EnemyAI : MonoBehaviour
             }
             else
                 reachedEndOfPath = false;
-            if (Vector2.Distance(rb.position, target.position) < minDistance || !pDetected || nearestPlayerScript.healthpoints < 0)
+            try
             {
-                rb.velocity = new Vector2(0, 0);
-                animator.SetFloat("SpeedX", 0f);
+                if (Vector2.Distance(rb.position, target.position) < minDistance || !pDetected || nearestPlayerScript.healthpoints < 0)
+                {
+                    rb.velocity = new Vector2(0, 0);
+                    animator.SetFloat("SpeedX", 0f);
+                    return;
+                }
+            }
+            catch (MissingReferenceException e)
+            {
+                ShouldUpdatePlayerArray = true;
                 return;
             }
+
             Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
             Vector2 newVelocity = direction * speed * Time.deltaTime;
 
@@ -235,7 +264,7 @@ public class EnemyAI : MonoBehaviour
     {
         animator.SetTrigger("Hurt");
         Vector2 move = gameObject.transform.position - transform.position;
-        rigidbody2D.AddForce(move.normalized * -200);
+        //rigidbody2D.AddForce(move.normalized * -200);
         if (healthpoints <= 0 && !isDead)
         {
             audioSource.PlayOneShot(sndDead);
@@ -272,5 +301,29 @@ public class EnemyAI : MonoBehaviour
         ArrowScript arrowScript = arrowInstance.GetComponent<ArrowScript>();
         arrowScript.TargetPos = nearestPlayer.transform.position;
         arrowScript.Damage = Damage;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Robot":
+            case "Player":
+                Debug.Log("EnemyAI " + OnAttack);
+                if (OnAttack)
+                {
+                    PlayerScript playerScript = collision.gameObject.GetComponent<PlayerScript>();
+                    if (!IsRanged && playerScript.healthpoints > 0)
+                    {
+                        Vector2 move = collision.transform.position - transform.position;
+                        playerScript.Hurt(Damage, move);
+                        OnAttack = false;
+                        circleCollider2D.radius = colliderRadius;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

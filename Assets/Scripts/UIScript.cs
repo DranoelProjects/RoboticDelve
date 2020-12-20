@@ -8,25 +8,51 @@ public class UIScript : MonoBehaviour
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
         copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText;
     public GameObject PanelInventory, PanelPause, PanelBoss;
-    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat, panelWin;
-    [SerializeField] Image bossFillBar;
+    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat, panelWin, panelTodo;
+    [SerializeField] bool isTutorialScene = false;
+    [SerializeField] Image bossFillBar, imageSwapCd;
     InventoryManager inventoryManager;
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource, canvasAudioSource;
     [SerializeField] AudioClip sndBtnClicked, music;
     AudioSource[] sources;
-    float musicVolume, soundsEffectsVolume;
-    bool isLastPanelBossActive = false;
+    float musicVolume, soundsEffectsVolume, swapCouldownValue, currentSwapCouldDownValue;
+    bool isLastPanelBossActive = false, swapCd = false;
+    GameManagerScript gameManagerScript;
 
     void Awake()
     {
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
     }
 
     private void Start()
     {
         canvasAudioSource = gameObject.GetComponent<AudioSource>();
         initVolumes();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            PanelInventory.SetActive(!PanelInventory.activeInHierarchy);
+            UpdateInventoryUI();
+        }
+
+        if (swapCd)
+        {
+            currentSwapCouldDownValue -= Time.deltaTime;
+            imageSwapCd.fillAmount = currentSwapCouldDownValue/swapCouldownValue;
+            if (currentSwapCouldDownValue < 0)
+            {
+                swapCd = false;
+            }
+        }
     }
 
     void initVolumes()
@@ -84,6 +110,15 @@ public class UIScript : MonoBehaviour
 
     public void PauseGame()
     {
+        PlayerScript playerScript;
+        if (gameManagerScript.IsVirtualCamFollowingScientist)
+        {
+            playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        }
+        else
+        {
+            playerScript = GameObject.FindGameObjectWithTag("Robot").GetComponent<PlayerScript>();
+        }
         if (!PanelPause.activeInHierarchy)
         {
             if (PanelInventory.activeInHierarchy)
@@ -91,12 +126,14 @@ public class UIScript : MonoBehaviour
                 PanelInventory.SetActive(false);
                 return;
             }
+            playerScript.IsAbleToAttack = false;
             Time.timeScale = 0;
             PanelBoss.SetActive(false);
         }
         else
         {
             Time.timeScale = 1;
+            StartCoroutine(AttackBool(playerScript));
             panelParameters.SetActive(false);
             PanelInventory.SetActive(false);
             if (isLastPanelBossActive)
@@ -105,6 +142,12 @@ public class UIScript : MonoBehaviour
             }
         }
         PanelPause.SetActive(!PanelPause.activeInHierarchy);
+    }
+
+    IEnumerator AttackBool(PlayerScript playerScript)
+    {
+        yield return new WaitForSeconds(0.3f);
+        playerScript.IsAbleToAttack = true;
     }
 
     public void QuitGame()
@@ -165,6 +208,10 @@ public class UIScript : MonoBehaviour
 
     public void ShowDefeatPanel()
     {
+        if (isTutorialScene)
+        {
+            panelTodo.SetActive(false);
+        }
         PanelBoss.SetActive(false);
         panelDefeat.SetActive(!panelDefeat.activeInHierarchy);
     }
@@ -199,6 +246,20 @@ public class UIScript : MonoBehaviour
 
     public void WinLevel()
     {
+        if (isTutorialScene)
+        {
+            panelTodo.SetActive(false);
+        }
+        GameManagerScript gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        gameManagerScript.RobotNumber = 2;
         panelWin.SetActive(true);
+    }
+
+    public void StartSwapCouldown(float cdValue)
+    {
+        swapCd = true;
+        currentSwapCouldDownValue = cdValue;
+        swapCouldownValue = cdValue;
+        imageSwapCd.fillAmount = 1f;
     }
 }

@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
 {
     [Header("Common Settings")]
     [SerializeField] float speed = 7f, damage = 1f;
-    public bool IsAbleToAttack = false;
+    public bool IsAbleToAttack = false, IsRobot = false;
     [SerializeField] public float healthpoints = 10;
     [SerializeField] public float healthpointsMax = 10;
     HealthBarScript healthBarScript;
@@ -53,16 +53,6 @@ public class PlayerScript : MonoBehaviour
     {
         if (CanMoove)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                uiScript.PauseGame();
-            }
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
-                uiScript.UpdateInventoryUI();
-            }
-
             if (Input.GetKeyDown(KeyCode.A))
             {
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -156,16 +146,6 @@ public class PlayerScript : MonoBehaviour
                     collision.gameObject.GetComponentInChildren<EnemyHealthBarScript>().UpdateHealthPoints();
                     enemyAI.Hurt();
                 }
-                if (enemyAI.OnAttack)
-                {
-                    if (!alreadyHurt && !enemyAI.IsRanged && healthpoints > 0)
-                    {
-                        alreadyHurt = true;
-                        Vector2 move = collision.transform.position - transform.position;
-                        Hurt(enemyAI.Damage, move);
-                        StartCoroutine(HurtBool(enemyAI.AttackCouldown));
-                    }
-                }
                 break;
             default:
                 break;
@@ -179,7 +159,22 @@ public class PlayerScript : MonoBehaviour
         animator.SetBool("CanMoove", false);
         CanMoove = false;
         GetComponent<PlayerScript>().enabled = false;
-        StartCoroutine(DefeatPanel());
+        if (!IsRobot)
+        {
+            StartCoroutine(DefeatPanel());
+        } else
+        {
+            StartCoroutine(DestroyRobot());
+        }
+    }
+
+    IEnumerator DestroyRobot()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManagerScript gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        gameManagerScript.SwapBetweenRobotAndPlayer();
+        gameManagerScript.LastRobotDead = true;
+        Destroy(gameObject);
     }
 
     IEnumerator DefeatPanel()
@@ -199,17 +194,11 @@ public class PlayerScript : MonoBehaviour
     {
         audioSource.PlayOneShot(sndHurt);
         animator.SetTrigger("Hurt");
-        m_rigidBody2D.AddForce(move.normalized * -200);
+        //m_rigidBody2D.AddForce(move.normalized * -200);
         healthpoints -= damage;
         PlayerPrefs.SetFloat("LifePointsLost", PlayerPrefs.GetFloat("LifePointsLost") + damage);
         healthBarScript.UpdateHealthPoints();
         if (healthpoints <= 0) DeathPlayer();
-    }
-
-    IEnumerator HurtBool(float enemyAttackCd)
-    {
-        yield return new WaitForSeconds(enemyAttackCd);
-        alreadyHurt = false;
     }
 }
 
