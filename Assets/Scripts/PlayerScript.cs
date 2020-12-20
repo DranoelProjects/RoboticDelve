@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
 {
     [Header("Common Settings")]
     [SerializeField] float speed = 7f, damage = 1f;
-    [SerializeField] bool isAbleToAttack = false;
+    public bool IsAbleToAttack = false;
     [SerializeField] public float healthpoints = 10;
     [SerializeField] public float healthpointsMax = 10;
     HealthBarScript healthBarScript;
@@ -51,31 +51,43 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (CanMoove)
         {
-            uiScript.PauseGame();
-        }
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
-            uiScript.UpdateInventoryUI();
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                enemy.GetComponent<EnemyAI>().ShouldUpdatePlayerArray = true;
+                uiScript.PauseGame();
             }
-            gameManagerScript.SwapBetweenRobotAndPlayer();
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                uiScript.PanelInventory.SetActive(!uiScript.PanelInventory.activeInHierarchy);
+                uiScript.UpdateInventoryUI();
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (GameObject enemy in enemies)
+                {
+                    enemy.GetComponent<EnemyAI>().ShouldUpdatePlayerArray = true;
+                }
+                gameManagerScript.SwapBetweenRobotAndPlayer();
+            }
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && IsAbleToAttack)
+            {
+                OnAttack = true;
+                colliderRadius = circleCollider2D.radius;
+                circleCollider2D.radius = 0.7f;
+                animator.SetTrigger("Attack");
+                audioSource.PlayOneShot(sndAttack);
+                StartCoroutine(AttackBool());
+            }
         }
     }
 
     void FixedUpdate()
     {
         if (CanMoove)
-        {
+        {         
             //movements
             float moveX = Input.GetAxis("Horizontal");
             float moveY = Input.GetAxis("Vertical");
@@ -93,16 +105,6 @@ public class PlayerScript : MonoBehaviour
             else if (moveX < 0 && lookRight)
             {
                 Flip();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !OnAttack && isAbleToAttack)
-            {
-                OnAttack = true;
-                colliderRadius = circleCollider2D.radius;
-                circleCollider2D.radius = 0.7f;
-                animator.SetTrigger("Attack");
-                audioSource.PlayOneShot(sndAttack);
-                StartCoroutine(AttackBool());
             }
         }
     }
