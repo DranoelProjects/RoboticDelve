@@ -7,23 +7,21 @@ public class Intermediaire
 {
     private System.Drawing.Color[,] _data, colorOutput;
     private Model model;
-    private Thread myThread;
-    private bool goToNextScene, stopThread, toutFini, showProgBar, unableToGen;
+    //private Thread myThread;
+    private bool goToNextScene, toutFini, showProgBar, unableToGen;
     public int outputHeight, outputWidth, maxEntropy, currentEntropy;
     private int[,] finalOutput;
     System.Random random = new System.Random();
 
     // Start is called before the first frame update
-    public Intermediaire()
+    public Intermediaire(int oHeight, int oWidth)
     {
         goToNextScene = false;
-        stopThread = false;
         toutFini = false;
         showProgBar = false;
         unableToGen = false;
-
-        //myThread = new Thread(startProcess);
-        //myThread.Start();
+        outputHeight = oHeight;
+        outputWidth = oWidth;
     }
 
     // Update is called once per frame
@@ -77,6 +75,7 @@ public class Intermediaire
             mapCouleur = model.GetMap();
             finalOutput = colorToInt(mapCouleur, outputHeight, outputWidth);
             toutFini = true;
+            Debug.Log(displayText(finalOutput));
             return finalOutput;
         }
         else
