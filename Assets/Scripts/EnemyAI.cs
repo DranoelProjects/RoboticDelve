@@ -17,8 +17,9 @@ public class EnemyAI : MonoBehaviour
     public float detRange = 5f, attackRange=1f, AttackCouldown=0.5f;
     [SerializeField] public float healthpoints = 10f, healthpointsMax = 10f, Damage = 1f;
     [SerializeField] float attackColliderRadius = 0.7f;
-    [SerializeField] bool isBoss = false, needToFlipOtherSide = false;
+    [SerializeField] bool isBoss = false, needToFlipOtherSide = false, needToDropItem = false;
     [SerializeField] string bossName = "Demon Boss";
+    [SerializeField] GameObject itemToDrop;
 
     Path path;
     int currentWaypoint = 0;
@@ -247,6 +248,11 @@ public class EnemyAI : MonoBehaviour
     IEnumerator Dead()
     {
         yield return new WaitForSeconds(2f);
+        if (needToDropItem)
+        {
+            GameObject item = Instantiate(itemToDrop, transform.position, Quaternion.identity);
+            item.transform.parent = GameObject.Find("Ressources").transform;
+        }
         Destroy(gameObject);
         if (isBoss)
         {

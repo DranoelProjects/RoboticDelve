@@ -8,7 +8,7 @@ public class UIScript : MonoBehaviour
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
         copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText;
     public GameObject PanelInventory, PanelPause, PanelBoss;
-    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat;
+    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat, panelWin;
     [SerializeField] Image bossFillBar;
     InventoryManager inventoryManager;
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
@@ -195,5 +195,10 @@ public class UIScript : MonoBehaviour
         healthBarScript.FillBarParent.enabled = false;
         healthBarScript.fillBar = bossFillBar;
         bossName.text = name;
+    }
+
+    public void WinLevel()
+    {
+        panelWin.SetActive(true);
     }
 }
