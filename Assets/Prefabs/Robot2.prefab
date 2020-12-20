@@ -428,7 +428,7 @@ MonoBehaviour:
   CanMoove: 0
   m_spriteTransform: {fileID: 2274156846169748751}
   OnAttack: 0
-  sndAttack: {fileID: 8300000, guid: f6288442b29f2924e9f78d0538476bec, type: 3}
+  sndAttack: {fileID: 8300000, guid: 88bd11df95a969d47b3e1c08f8ba3db2, type: 3}
   sndItemPickup: {fileID: 8300000, guid: fdcc9842592efd84ca4b5769a07845a0, type: 3}
   sndHurt: {fileID: 8300000, guid: a953b229686fec046994edabdf0d20f8, type: 3}
   sndDead: {fileID: 8300000, guid: 0474dc04ea223da4890bff2c1dbcb46b, type: 3}

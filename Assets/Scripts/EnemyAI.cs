@@ -141,7 +141,6 @@ public class EnemyAI : MonoBehaviour
                         uiScript.ActiveFigthingBossUI(gameObject.GetComponentInChildren<EnemyHealthBarScript>(), bossName);
                     }
                 }
-                Debug.Log("On attack : " + OnAttack + " distance : " + distanceWithNearestPlayer + " attackRange : " + attackRange);
                 if(!OnAttack && distanceWithNearestPlayer < attackRange && nearestPlayerScript.healthpoints > 0f)
                 {
                     OnAttack = true;
@@ -180,7 +179,6 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(AttackCouldown);
         OnAttack = false;
-        Debug.Log("OnAttackShouldBeFalse");
         circleCollider2D.radius = colliderRadius;
     }
 
@@ -309,7 +307,6 @@ public class EnemyAI : MonoBehaviour
         {
             case "Robot":
             case "Player":
-                Debug.Log("EnemyAI " + OnAttack);
                 if (OnAttack)
                 {
                     PlayerScript playerScript = collision.gameObject.GetComponent<PlayerScript>();
