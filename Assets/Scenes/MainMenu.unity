@@ -1876,7 +1876,7 @@ MonoBehaviour:
   sliderMusic: {fileID: 6205820577245563888}
   sliderSoundsEffects: {fileID: 5244748488537163120}
   sndBtnClicked: {fileID: 8300000, guid: ae7b09337fe0b1a4598af945ebd73245, type: 3}
-  numberLevel: {fileID: 1377943974}
+  numberPoints: {fileID: 0}
   numberMonstersKilled: {fileID: 149422286}
   numberBossKilled: {fileID: 319157058}
   numberLifePointsLost: {fileID: 1413806685}
@@ -2212,7 +2212,7 @@ GameObject:
   - component: {fileID: 869887871}
   - component: {fileID: 869887870}
   m_Layer: 5
-  m_Name: TextLevel
+  m_Name: TextPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2256,7 +2256,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Niveau
+  m_text: Points
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f49eae5b091d3b84f8293ce1e203e7b7, type: 2}
   m_sharedMaterial: {fileID: -220120910023315143, guid: f49eae5b091d3b84f8293ce1e203e7b7,
@@ -2718,7 +2718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &956129957
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3393,7 +3393,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1358291492
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3431,7 +3431,7 @@ GameObject:
   - component: {fileID: 1377943975}
   - component: {fileID: 1377943974}
   m_Layer: 5
-  m_Name: NumberLevel
+  m_Name: NumberPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3453,7 +3453,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 393, y: 113}
+  m_AnchoredPosition: {x: 401, y: 113}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1377943974
@@ -3475,7 +3475,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ToDo
+  m_text: 10000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f49eae5b091d3b84f8293ce1e203e7b7, type: 2}
   m_sharedMaterial: {fileID: -220120910023315143, guid: f49eae5b091d3b84f8293ce1e203e7b7,
@@ -3545,7 +3545,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -486.9157, w: 0}
   m_textInfo:
     textComponent: {fileID: 1377943974}
-    characterCount: 4
+    characterCount: 5
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -4435,7 +4435,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TODO
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f49eae5b091d3b84f8293ce1e203e7b7, type: 2}
   m_sharedMaterial: {fileID: -220120910023315143, guid: f49eae5b091d3b84f8293ce1e203e7b7,
@@ -4505,7 +4505,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -486.9157, w: 0}
   m_textInfo:
     textComponent: {fileID: 1599027401}
-    characterCount: 4
+    characterCount: 3
     spriteCount: 0
     spaceCount: 0
     wordCount: 1

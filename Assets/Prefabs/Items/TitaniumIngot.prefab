@@ -146,3 +146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: TitaniumIngot
   ItemValue: 1
+  ItemPointsAmount: 40

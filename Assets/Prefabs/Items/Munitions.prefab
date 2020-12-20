@@ -146,3 +146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Munitions
   ItemValue: 10
+  ItemPointsAmount: 30

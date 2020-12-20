@@ -6,4 +6,5 @@ public class ItemScript : MonoBehaviour
 {
     public string ItemName = "IronIngot";
     public int ItemValue = 1;
+    public int ItemPointsAmount = 10;
 }

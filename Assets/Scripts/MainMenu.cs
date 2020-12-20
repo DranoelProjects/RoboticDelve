@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource, mainMenuAudioSource;
     [SerializeField] AudioClip sndBtnClicked;
-    [SerializeField] TextMeshProUGUI numberLevel, numberMonstersKilled, numberBossKilled, numberLifePointsLost, numberRobotsBuild;
+    [SerializeField] TextMeshProUGUI numberPoints, numberMonstersKilled, numberBossKilled, numberLifePointsLost, numberRobotsBuild;
     AudioSource[] sources;
     float musicVolume, soundsEffectsVolume;
 
@@ -50,7 +50,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetFloat("MusicVolume", sliderMusic.value);
         PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
         PlayButtonClickedSound();
-        SceneManager.LoadScene("MapDisplay");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Time.timeScale = 1;
     }
 
@@ -111,8 +111,7 @@ public class MainMenu : MonoBehaviour
         numberBossKilled.text = PlayerPrefs.GetInt("BossKilled").ToString();
         numberLifePointsLost.text = PlayerPrefs.GetFloat("LifePointsLost").ToString();
         numberMonstersKilled.text = PlayerPrefs.GetInt("MonstersKilled").ToString();
-        //TODO
-        //numberLevel.text
-        //numberRobotsBuild.text
+        numberPoints.text = PlayerPrefs.GetInt("Points").ToString();
+        numberRobotsBuild.text = PlayerPrefs.GetInt("RobotsBuilded").ToString();
     }
 }

@@ -82,7 +82,7 @@ MonoBehaviour:
   minDistance: 0.8
   detRange: 5
   attackRange: 0.9
-  AttackCouldown: 1
+  AttackCouldown: 1.5
   healthpoints: 5
   healthpointsMax: 5
   Damage: 1
@@ -117,7 +117,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4}
+  m_Offset: {x: 0, y: -0.11}
   serializedVersion: 2
   m_Radius: 0.2
 --- !u!50 &3629852588586013607

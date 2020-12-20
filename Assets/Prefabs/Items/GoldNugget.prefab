@@ -146,3 +146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: GoldNugget
   ItemValue: 1
+  ItemPointsAmount: 50

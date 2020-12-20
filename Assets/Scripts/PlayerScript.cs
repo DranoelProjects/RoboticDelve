@@ -124,6 +124,8 @@ public class PlayerScript : MonoBehaviour
                 ItemScript itemScript = collision.gameObject.GetComponent<ItemScript>();
                 string itemName = itemScript.ItemName;
                 int itemValue = itemScript.ItemValue;
+                PlayerPrefs.SetInt("Points", PlayerPrefs.GetInt("Points") + itemScript.ItemPointsAmount);
+                uiScript.UpdatePoints();
                 inventoryManager.UpdateItemNumber(itemName, itemValue);
                 Destroy(collision.gameObject);
                 audioSource.PlayOneShot(sndItemPickup);

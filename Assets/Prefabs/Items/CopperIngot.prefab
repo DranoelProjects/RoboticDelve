@@ -145,3 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: CopperIngot
   ItemValue: 1
+  ItemPointsAmount: 5

@@ -293,7 +293,7 @@ PrefabInstance:
     - target: {fileID: 3629852588586013604, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013627, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
@@ -461,7 +461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 36.1, y: 160.8}
+  m_AnchoredPosition: {x: 36.1, y: 172}
   m_SizeDelta: {x: 6774.6353, y: 97.97644}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &279711320
@@ -1498,7 +1498,7 @@ PrefabInstance:
     - target: {fileID: 3629852588586013604, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013625, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
@@ -1990,7 +1990,7 @@ PrefabInstance:
     - target: {fileID: 3629852588586013604, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013627, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
@@ -2124,7 +2124,7 @@ PrefabInstance:
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -269
+      value: -291
       objectReference: {fileID: 0}
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
@@ -2547,7 +2547,7 @@ PrefabInstance:
     - target: {fileID: 3629852588586013604, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013627, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
@@ -3010,12 +3010,12 @@ PrefabInstance:
     - target: {fileID: 3629852588586013625, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: OnAttack
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013625, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: AttackCouldown
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013627, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
@@ -3679,11 +3679,16 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'Vous trouverez differents objets dans le labyrinthe, comme par exemple
-    des lingots pour fabriquer des robots. Certains monstres peuvent en mourant vous
-    faire gagner des items.
+    des lingots. Certains monstres peuvent en mourant vous faire gagner des items.
 
-    Il vous faudra trouver une cle pour passer au niveau
-    suivant.'
+    Il
+    vous faudra trouver une cle pour passer au niveau suivant.
+
+    Les items vous
+    rapportent des points.
+
+    Vous pouvez visualiser vos statistiques depuis le
+    menu principal.'
 --- !u!222 &1646278823
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4170,7 +4175,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0, y: 93}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1721402231

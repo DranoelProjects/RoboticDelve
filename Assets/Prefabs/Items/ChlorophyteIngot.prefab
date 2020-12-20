@@ -146,3 +146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: ChlorophyteIngot
   ItemValue: 1
+  ItemPointsAmount: 15

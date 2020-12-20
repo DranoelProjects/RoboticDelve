@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class UIScript : MonoBehaviour
 {
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
-        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText;
+        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText, outputPoints;
     public GameObject PanelInventory, PanelPause, PanelBoss;
     [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat, panelWin, panelTodo;
     [SerializeField] bool isTutorialScene = false;
@@ -261,5 +261,10 @@ public class UIScript : MonoBehaviour
         currentSwapCouldDownValue = cdValue;
         swapCouldownValue = cdValue;
         imageSwapCd.fillAmount = 1f;
+    }
+
+    public void UpdatePoints()
+    {
+        outputPoints.text = PlayerPrefs.GetInt("Points").ToString();
     }
 }
