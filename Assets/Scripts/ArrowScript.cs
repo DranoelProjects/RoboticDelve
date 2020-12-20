@@ -13,7 +13,10 @@ public class ArrowScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Robot"))
         {
-            collision.gameObject.GetComponent<PlayerScript>().Hurt(Damage, new Vector2(1f,-0.3f));
+            if(collision.GetComponent<PlayerScript>().healthpoints > 0)
+            {
+                collision.gameObject.GetComponent<PlayerScript>().Hurt(Damage, new Vector2(1f, -0.3f));
+            }
         }
         if (!collision.gameObject.CompareTag("Enemy"))
         {

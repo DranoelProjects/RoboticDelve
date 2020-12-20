@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EmptyTrigger : MonoBehaviour
 {
+    [SerializeField] bool needToShowPanel = true;
     [SerializeField] GameObject panel;
     [SerializeField] Text task;
     [SerializeField] string newTask;
@@ -14,10 +15,14 @@ public class EmptyTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !alreadyDisplayed)
         {
-            panel.SetActive(true);
-            alreadyDisplayed = true;
-            Time.timeScale = 0;
+            if (needToShowPanel)
+            {
+                collision.GetComponent<PlayerScript>().IsAbleToAttack = false;
+                panel.SetActive(true);
+                Time.timeScale = 0;
+            }
             task.text = newTask;
+            alreadyDisplayed = true;
         }
     }
 }

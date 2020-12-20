@@ -88,6 +88,7 @@ MonoBehaviour:
   Damage: 1
   attackColliderRadius: 0.7
   isBoss: 0
+  needToFlipOtherSide: 1
   bossName: Demon Boss
   ShouldUpdatePlayerArray: 1
   OnAttack: 0

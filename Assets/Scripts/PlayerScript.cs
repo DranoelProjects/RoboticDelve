@@ -150,7 +150,7 @@ public class PlayerScript : MonoBehaviour
                 break;
             case "Enemy":
                 EnemyAI enemyAI = collision.gameObject.GetComponent<EnemyAI>();
-                if (OnAttack && enemyAI.healthpoints >= 0)
+                if (OnAttack && IsAbleToAttack && enemyAI.healthpoints > 0)
                 {
                     enemyAI.healthpoints -= damage;
                     collision.gameObject.GetComponentInChildren<EnemyHealthBarScript>().UpdateHealthPoints();
@@ -158,7 +158,7 @@ public class PlayerScript : MonoBehaviour
                 }
                 if (enemyAI.OnAttack)
                 {
-                    if (!alreadyHurt && !enemyAI.IsRanged)
+                    if (!alreadyHurt && !enemyAI.IsRanged && healthpoints > 0)
                     {
                         alreadyHurt = true;
                         Vector2 move = collision.transform.position - transform.position;
@@ -175,7 +175,8 @@ public class PlayerScript : MonoBehaviour
     void DeathPlayer()
     {
         audioSource.PlayOneShot(sndDead);
-        animator.SetTrigger("Fall");
+        animator.SetTrigger("Dead");
+        animator.SetBool("CanMoove", false);
         CanMoove = false;
         GetComponent<PlayerScript>().enabled = false;
         StartCoroutine(DefeatPanel());

@@ -12,12 +12,12 @@ public class TutorialUI : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0;
-        playerScript = player.GetComponent<PlayerScript>(); 
+        playerScript = player.GetComponent<PlayerScript>();
+        playerScript.IsAbleToAttack = false;
     }
 
     public void OnClickOK()
     {
-        playerScript.IsAbleToAttack = false;
         StartCoroutine(AttackBool());
         audioSource = GetComponent<AudioSource>();
         Time.timeScale = 1;

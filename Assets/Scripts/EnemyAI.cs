@@ -17,7 +17,7 @@ public class EnemyAI : MonoBehaviour
     public float detRange = 5f, attackRange=1f, AttackCouldown=0.5f;
     [SerializeField] public float healthpoints = 10f, healthpointsMax = 10f, Damage = 1f;
     [SerializeField] float attackColliderRadius = 0.7f;
-    [SerializeField] bool isBoss = false;
+    [SerializeField] bool isBoss = false, needToFlipOtherSide = false;
     [SerializeField] string bossName = "Demon Boss";
 
     Path path;
@@ -206,11 +206,20 @@ public class EnemyAI : MonoBehaviour
             float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
             if (distance < newWaypointDistance)
                 currentWaypoint++;
+            if (!needToFlipOtherSide)
+            {
+                if (direction.x > 0 && sprite.localScale.x < 0)
+                    Flip();
+                if (direction.x < 0 && sprite.localScale.x > 0)
+                    Flip();
+            } else
+            {
+                if (direction.x > 0 && sprite.localScale.x > 0)
+                    Flip();
+                if (direction.x < 0 && sprite.localScale.x < 0)
+                    Flip();
+            }
 
-            if (direction.x > 0 && sprite.localScale.x < 0)
-                Flip();
-            if (direction.x < 0 && sprite.localScale.x > 0)
-                Flip();
         }
     }
 
@@ -230,7 +239,8 @@ public class EnemyAI : MonoBehaviour
         {
             audioSource.PlayOneShot(sndDead);
             isDead = true;
-            animator.SetTrigger("Fall");
+            animator.SetTrigger("Dead");
+            animator.SetBool("CanMoove", false);
             StartCoroutine(Dead());
         }
     }

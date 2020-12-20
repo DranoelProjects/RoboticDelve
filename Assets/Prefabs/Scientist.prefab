@@ -674,7 +674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   damage: 1
-  isAbleToAttack: 1
+  IsAbleToAttack: 1
   healthpoints: 10
   healthpointsMax: 10
   CanMoove: 1
