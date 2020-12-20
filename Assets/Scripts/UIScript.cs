@@ -16,6 +16,7 @@ public class UIScript : MonoBehaviour
     [SerializeField] AudioClip sndBtnClicked, music;
     AudioSource[] sources;
     float musicVolume, soundsEffectsVolume;
+    bool isLastPanelBossActive = false;
 
     void Awake()
     {
@@ -85,12 +86,23 @@ public class UIScript : MonoBehaviour
     {
         if (!PanelPause.activeInHierarchy)
         {
+            if (PanelInventory.activeInHierarchy)
+            {
+                PanelInventory.SetActive(false);
+                return;
+            }
             Time.timeScale = 0;
+            PanelBoss.SetActive(false);
         }
         else
         {
             Time.timeScale = 1;
             panelParameters.SetActive(false);
+            PanelInventory.SetActive(false);
+            if (isLastPanelBossActive)
+            {
+                PanelBoss.SetActive(true);
+            }
         }
         PanelPause.SetActive(!PanelPause.activeInHierarchy);
     }
@@ -153,6 +165,7 @@ public class UIScript : MonoBehaviour
 
     public void ShowDefeatPanel()
     {
+        PanelBoss.SetActive(false);
         panelDefeat.SetActive(!panelDefeat.activeInHierarchy);
     }
 
@@ -174,6 +187,7 @@ public class UIScript : MonoBehaviour
 
     public void ActiveFigthingBossUI(EnemyHealthBarScript healthBarScript, string name)
     {
+        isLastPanelBossActive = true;
         PanelBoss.SetActive(true);
         healthBarScript.IsBoss = true;
         healthBarScript.Txt = healthBarBossText;

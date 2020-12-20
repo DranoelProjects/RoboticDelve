@@ -65,7 +65,7 @@ public class InventoryManager : MonoBehaviour
         PlayerRobotsPlansArray.Add(robotPlanData);
     }
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
         PlayerPrefs.SetInt("IronIngot", IronIngotNumber);
         PlayerPrefs.SetInt("RobotPlan", RobotPlanNumber);

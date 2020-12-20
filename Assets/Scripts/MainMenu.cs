@@ -44,6 +44,9 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetFloat("MusicVolume", sliderMusic.value);
+        PlayerPrefs.SetFloat("SoundsEffectsVolume", sliderSoundsEffects.value);
         PlayButtonClickedSound();
         SceneManager.LoadScene("MapDisplay");
         Time.timeScale = 1;
