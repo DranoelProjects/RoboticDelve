@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7837363883708339198
+--- !u!1 &3534679988107102713
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7837363883708339196}
-  - component: {fileID: 7837363883708339199}
+  - component: {fileID: 3534679988107102711}
+  - component: {fileID: 3534679988107102710}
   m_Layer: 0
-  m_Name: InventoryManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7837363883708339196
+--- !u!4 &3534679988107102711
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7837363883708339198}
+  m_GameObject: {fileID: 3534679988107102713}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.4739205, y: 0.5052015, z: 1.9848232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7837363883708339199
+--- !u!114 &3534679988107102710
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7837363883708339198}
+  m_GameObject: {fileID: 3534679988107102713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6101c905a76911f4681f4999e9e5ac05, type: 3}
+  m_Script: {fileID: 11500000, guid: 475ab56f5914b914581ff2ba5f6a4b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IronIngotNumber: 0
-  RobotPlanNumber: 0
-  MunitionsNumber: 0
-  GoldNuggetAmount: 0
-  KeyAmount: 0
-  CopperIngotAmount: 0
-  ChlorophyteIngotAmount: 0
-  LeadIngotAmount: 0
-  CobaltIngotAmount: 0
-  TitaniumIngotAmount: 0
-  PlayerRobotsPlansArray: []
+  robotPrefab: {fileID: 1308311274328708002, guid: 97d6fd50866a03d4a8aef4f3b6efe3e5,
+    type: 3}
+  scientist: {fileID: 0}
