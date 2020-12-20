@@ -6,57 +6,43 @@ The above copyright notice and this permission notice shall be included in all c
 The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 */
 
-using System;
-using System.Xml;
 using System.Linq;
+using System.Xml.Linq;
 using System.ComponentModel;
 using System.Collections.Generic;
 
 static class Stuff
 {
-	public static int Random(this double[] a, double r)
-	{
-		double sum = a.Sum();
+    public static int Random(this double[] a, double r)
+    {
+        double sum = a.Sum();
+        for (int j = 0; j < a.Length; j++) a[j] /= sum;
 
-		if (sum == 0)
-		{
-			for (int j = 0; j < a.Count(); j++) a[j] = 1;
-			sum = a.Sum();
-		}
+        int i = 0;
+        double x = 0;
 
-		for (int j = 0; j < a.Count(); j++) a[j] /= sum;
+        while (i < a.Length)
+        {
+            x += a[i];
+            if (r <= x) return i;
+            i++;
+        }
 
-		int i = 0;
-		double x = 0;
+        return 0;
+    }
 
-		while (i < a.Count())
-		{
-			x += a[i];
-			if (r <= x) return i;
-			i++;
-		}
+    public static long ToPower(this int a, int n)
+    {
+        long product = 1;
+        for (int i = 0; i < n; i++) product *= a;
+        return product;
+    }
 
-		return 0;
-	}
+    public static T Get<T>(this XElement xelem, string attribute, T defaultT = default)
+    {
+        XAttribute a = xelem.Attribute(attribute);
+        return a == null ? defaultT : (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(a.Value);
+    }
 
-	public static long Power(int a, int n)
-	{
-		long product = 1;
-		for (int i = 0; i < n; i++) product *= a;
-		return product;
-	}
-
-	public static T Get<T>(this XmlNode node, string attribute, T defaultT = default(T))
-	{
-		string s = ((XmlElement)node).GetAttribute(attribute);
-		var converter = TypeDescriptor.GetConverter(typeof(T));
-		return s == "" ? defaultT : (T)converter.ConvertFromString(s);
-	}
-
-	public static T[] SubArray<T>(this T[] data, int index, int length)
-	{
-	    T[] result = new T[length];
-	    Array.Copy(data, index, result, 0, length);
-	    return result;
-	}
+    public static IEnumerable<XElement> Elements(this XElement xelement, params string[] names) => xelement.Elements().Where(e => names.Any(n => n == e.Name));
 }
