@@ -238,15 +238,23 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
-        uiScript.StopBossMusic();
-        uiScript.PanelBoss.SetActive(false);
+        if (isBoss)
+        {
+            uiScript.StopBossMusic();
+            uiScript.PanelBoss.SetActive(false);
+            PlayerPrefs.SetInt("BossKilled", PlayerPrefs.GetInt("BossKilled") + 1);
+        } else
+        {
+            PlayerPrefs.SetInt("MonstersKilled", PlayerPrefs.GetInt("MonstersKilled") + 1);
+        }
     }
 
     private void shootArrow()
     {
         GameObject arrowInstance = Instantiate(arrow, transform.position, Quaternion.identity);
         arrowInstance.transform.parent = gameObject.transform;
-        arrowInstance.GetComponent<ArrowScript>().TargetPos = nearestPlayer.transform.position;
+        ArrowScript arrowScript = arrowInstance.GetComponent<ArrowScript>();
+        arrowScript.TargetPos = nearestPlayer.transform.position;
+        arrowScript.Damage = Damage;
     }
-
 }

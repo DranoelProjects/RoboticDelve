@@ -6,13 +6,14 @@ public class ArrowScript : MonoBehaviour
 {
     float speed = 10f;
     public Vector3 TargetPos;
+    public float Damage;
     Vector3 startPos;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Robot"))
         {
-            collision.gameObject.GetComponent<PlayerScript>().Hurt(3, new Vector2(1f,-0.3f));
+            collision.gameObject.GetComponent<PlayerScript>().Hurt(Damage, new Vector2(1f,-0.3f));
         }
         if (!collision.gameObject.CompareTag("Enemy"))
         {

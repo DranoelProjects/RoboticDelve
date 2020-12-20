@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] Slider sliderMusic, sliderSoundsEffects;
     AudioSource musicAudioSource, mainMenuAudioSource;
     [SerializeField] AudioClip sndBtnClicked;
+    [SerializeField] TextMeshProUGUI numberLevel, numberMonstersKilled, numberBossKilled, numberLifePointsLost, numberRobotsBuild;
     AudioSource[] sources;
     float musicVolume, soundsEffectsVolume;
 
@@ -102,5 +104,15 @@ public class MainMenu : MonoBehaviour
     {
         mainMenuAudioSource.volume = soundsEffectsVolume;
         mainMenuAudioSource.PlayOneShot(sndBtnClicked);
+    }
+
+    public void UpdateStats()
+    {
+        numberBossKilled.text = PlayerPrefs.GetInt("BossKilled").ToString();
+        numberLifePointsLost.text = PlayerPrefs.GetFloat("LifePointsLost").ToString();
+        numberMonstersKilled.text = PlayerPrefs.GetInt("MonstersKilled").ToString();
+        //TODO
+        //numberLevel.text
+        //numberRobotsBuild.text
     }
 }
