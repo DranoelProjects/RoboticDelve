@@ -12,8 +12,7 @@ public class MapManager : MonoBehaviour
     public GameObject[] m_ressources;
     public GameObject m_ressourcesHolder;
     public List<TileBase> m_tileHolder;
-    public int m_mapSize, m_smoothStep;
-    private int m_genmapWidth, m_genmapHeight, m_mapWidth, m_mapHeight;
+    public int m_oMapWidth, m_oMapHeight, m_smoothStep;
     private string[][] m_genMap;
     private int[,] m_metaMap;
     private AstarData m_ASdata;
@@ -24,10 +23,9 @@ public class MapManager : MonoBehaviour
     {
         //Generation
         Application.targetFrameRate = 60;
-        //WFC generator = new WFC(m_mapSize, m_mapSize);
-        m_metaMap = generationDuBled(m_mapSize);
+        Intermediaire myWFC = new Intermediaire(m_oMapHeight, m_oMapWidth);
+        m_metaMap = myWFC.startProcess();
         //m_metaMap = new int[,]{ };
-        m_genmapWidth = m_genmapHeight = m_mapWidth = m_mapHeight = m_mapSize;
         updateTileMap();
 
         //Ressources
@@ -36,8 +34,8 @@ public class MapManager : MonoBehaviour
         //Pathfinding
         m_ASdata = AstarPath.active.data;
         m_ASgg = m_ASdata.gridGraph;
-        int width = m_mapSize;
-        int depth = m_mapSize;
+        int width = m_oMapWidth;
+        int depth = m_oMapHeight;
         float nodeSize = 1;
         m_ASgg.center = new Vector3(0, 0, 0);
         m_ASgg.SetDimensions(width, depth, nodeSize);
@@ -55,12 +53,12 @@ public class MapManager : MonoBehaviour
     {
         int[,] map = new int[mapSize, mapSize];
         int[,] temp = map;
-        for (int i = 0; i < m_mapSize; i++)
+        for (int i = 0; i < mapSize; i++)
         {
             map[0, i] = 1;
             map[i, 0] = 1;
-            map[m_mapSize - 1, i] = 1;
-            map[i, m_mapSize - 1] = 1;
+            map[mapSize - 1, i] = 1;
+            map[i, mapSize - 1] = 1;
 
         }
         for (int i = 1; i < mapSize - 1; i++)
@@ -86,7 +84,7 @@ public class MapManager : MonoBehaviour
                         + map[i - 1, j + 1]
                         + map[i, j + 1]
                         + map[i + 1, j + 1];
-                    val = (int) 2* val / 9;
+                    val = (int)2 * val / 9;
                     temp[i, j] = val;
                 }
             }
@@ -97,22 +95,33 @@ public class MapManager : MonoBehaviour
 
     private void updateTileMap()
     {
-        for (int x = 0; x < m_mapWidth; x++)
+        for (int i = 0; i < m_oMapWidth; i++)
         {
-            for (int y = 0; y < m_mapHeight; y++)
+            m_metaMap[0, i] = -1;
+            m_metaMap[m_oMapHeight- 1, i] = -1;
+        }
+        for (int i = 0; i < m_oMapHeight; i++)
+        {
+            m_metaMap[i, 0] = -1;
+            m_metaMap[i, m_oMapWidth - 1] = -1;
+        }
+            for (int y = 0; y < m_oMapHeight; y++)
+        {
+            for (int x = 0; x < m_oMapWidth; x++)
             {
                 if (m_metaMap[y, x] == -1)
-                    m_background.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_mapWidth / 2), Mathf.FloorToInt(-y + m_mapHeight / 2), 0), m_tileHolder[0]);
+                    m_background.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[0]);
                 else if (m_metaMap[y, x] == 1)
-                    m_walls.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_mapWidth / 2), Mathf.FloorToInt(-y + m_mapHeight / 2), 0), m_tileHolder[0]);
+                    m_walls.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[0]);
                 else
-                    m_background.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_mapWidth / 2), Mathf.FloorToInt(-y + m_mapHeight / 2), 0), m_tileHolder[TileFromMap(x, y)]);
+                    m_background.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[TileFromMap(x, y)]);
             }
         }
     }
 
     private int TileFromMap(int x, int y)
     {
+        Debug.Log(x + "," + y);
         int tileToDisplay = 0;
         if (m_metaMap[y - 1, x] == 1)
             tileToDisplay += 1;
@@ -148,14 +157,14 @@ public class MapManager : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                x = Random.Range(0, m_mapSize);
-                y = Random.Range(0, m_mapSize);
-                while (m_metaMap[y,x] == 1)
+                x = Random.Range(0, m_oMapWidth);
+                y = Random.Range(0, m_oMapHeight);
+                while (m_metaMap[y, x] == 1)
                 {
-                    x = Random.Range(0, m_mapSize);
-                    y = Random.Range(0, m_mapSize);
+                    x = Random.Range(0, m_oMapWidth);
+                    y = Random.Range(0, m_oMapHeight);
                 }
-                GameObject ressource = Instantiate(m_ressources[i], new Vector3(x - (int) m_mapSize / 2 + 0.5f, y - (int) m_mapSize / 2 + 0.5f, 0), Quaternion.identity);
+                GameObject ressource = Instantiate(m_ressources[i], new Vector3(x - (int)m_oMapWidth / 2 + 0.5f, y - (int)m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
                 ressource.transform.parent = m_ressourcesHolder.transform;
             }
         }
@@ -163,11 +172,11 @@ public class MapManager : MonoBehaviour
 
     private void loadTest()
     {
-        m_genMap = new string[m_genmapWidth][];
-        for (int i = 0; i < m_genmapWidth; i++)
+        m_genMap = new string[m_oMapWidth][];
+        for (int i = 0; i < m_oMapWidth; i++)
         {
-            m_genMap[i] = new string[m_genmapHeight];
-            for (int j = 0; j < m_genmapHeight; j++)
+            m_genMap[i] = new string[m_oMapHeight];
+            for (int j = 0; j < m_oMapHeight; j++)
             {
                 m_genMap[i][j] = "0123456789";
             }

@@ -21,11 +21,7 @@ public class WFC : MonoBehaviour
     private int[] possibilities;
     private Thread myThread;
     private bool stopThread;
-
-    private void Awake()
-    {
-        Debug.Log("autoscroll");
-    }
+    
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -44,6 +40,7 @@ public class WFC : MonoBehaviour
         {
             //return output;
         }
+        mask.fillAmount = (float)CalculateTotalEntropy() / (float)maxTotEnt;
     }
 
     private void OnApplicationQuit()
@@ -102,15 +99,13 @@ public class WFC : MonoBehaviour
                 }
                 //Create a flipped version
                 int[,] patternFlip = Flip(pattern, 3);
-                if (!this.isEqual(pattern, patternFlip))
+                for (int t = 0; t < 4; t++)
                 {
-                    for (int t = 0; t < 4; t++)
-                    {
-                        RecordPattern(this.Rotate(patternFlip, 3, t), i, j, t + 4);
-                    }
+                    RecordPattern(this.Rotate(patternFlip, 3, t), i, j, t + 4);
                 }
             }
         }
+
         //Debug
         Debug.Log(displayText(patternMap));
         freqTot = 0;
@@ -428,7 +423,6 @@ public class WFC : MonoBehaviour
 
     void Propagate(int x, int y)
     {
-        //mask.fillAmount = (float)CalculateTotalEntropy() / (float)maxTotEnt;
         Debug.Log("Entropy: " + CalculateTotalEntropy());
         bool[] modified = new bool[8];
         for (int i = 0; i < 8; i++)
