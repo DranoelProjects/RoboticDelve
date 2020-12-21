@@ -4815,7 +4815,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000039070845, y: -19}
+  m_AnchoredPosition: {x: 0.000039070845, y: -33}
   m_SizeDelta: {x: 6346.494, y: 67.21509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1785958701
@@ -4859,7 +4859,10 @@ MonoBehaviour:
     Appuyez A nouveau sur "A" pour revenir sur le scientifique.
 
     Vous
-    ne pouvez utiliser que 2 robots par niveau.'
+    ne pouvez utiliser que 2 robots par niveau.
+
+    Attention seul le scientifique
+    peut passer au niveau suivant !'
 --- !u!222 &1785958702
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5165,7 +5168,7 @@ PrefabInstance:
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -213
+      value: -271
       objectReference: {fileID: 0}
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
