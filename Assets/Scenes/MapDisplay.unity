@@ -573,9 +573,14 @@ MonoBehaviour:
   m_corner4: {fileID: 127681547}
   m_ressources:
   - {fileID: 5408716017161326318, guid: 22362e3eb7f472d459304cb41545307e, type: 3}
-  - {fileID: 431241857698472870, guid: b5e302e1f5d41364ca39325b582a01d8, type: 3}
   - {fileID: 7585311026135451742, guid: 248f1ce0966954a4a83701d42e7bbd15, type: 3}
+  - {fileID: 4922171881140221565, guid: 7056d8257f30ca848a6b5ac4b6ad838a, type: 3}
+  - {fileID: 7469946311612181657, guid: 6cf7ddad6a0a6f64cba2ec008c2efc53, type: 3}
+  - {fileID: 431241857698472870, guid: b5e302e1f5d41364ca39325b582a01d8, type: 3}
+  - {fileID: 7496451811617110811, guid: ce347c47cbede86478e4f5b72f99717d, type: 3}
+  - {fileID: 536709291228969251, guid: b0779d61d28b5b04c83a5a3a4ba9bb8a, type: 3}
   - {fileID: 5431928238633236429, guid: ac244c38591e8a043bbcf30876af3dfb, type: 3}
+  - {fileID: 1622062617335862464, guid: e52f94c689d3a41418c7a5234200c4a7, type: 3}
   m_enemies:
   - {fileID: 3629852588586013604, guid: 94fa42899bfce5948b78bb37a43d5d4a, type: 3}
   - {fileID: 1364158762565080157, guid: 6e38e0a0c2dbbc74590514d6eb1f6cf7, type: 3}
@@ -623,6 +628,7 @@ MonoBehaviour:
   m_oMapHeight: 100
   m_smoothStep: 1
   m_lvl: 0
+  m_enmLvl: 0
 --- !u!114 &303603392
 MonoBehaviour:
   m_ObjectHideFlags: 0
