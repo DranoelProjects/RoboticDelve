@@ -19,14 +19,22 @@ public class ExitScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //check if player found the key
+        //only the scientist can win the lvl
         if (collision.CompareTag("Player") && inventoryManager.KeyAmount > 0)
         {
+            //remove the key from inventory
             inventoryManager.KeyAmount = 0;
+            //Play scientist win lvl animation
             collision.GetComponentInChildren<Animator>().SetTrigger("WinLevel");
+            //Disable moving script
             collision.GetComponent<PlayerScript>().CanMoove = false;
+            //Show win level panel
             uiScript.WinLevel();
+            //Play winning level sound
             audioSource = GetComponent<AudioSource>();
             audioSource.PlayOneShot(sndWinLevel);
+            //Loading next level after 2 seconds
             StartCoroutine(LoadScene());
         }
     }
@@ -34,6 +42,7 @@ public class ExitScript : MonoBehaviour
     IEnumerator LoadScene()
     {
         yield return new WaitForSeconds(2f);
+        //Check if the current scene is tutorial or already the real Donjon
         if (isTutorialScene)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
