@@ -503,6 +503,11 @@ PrefabInstance:
       propertyPath: FillBarParent
       value: 
       objectReference: {fileID: 1472635342827874654}
+    - target: {fileID: 5914037234558834981, guid: fd452a78ba4710440a5809a7e37a2630,
+        type: 3}
+      propertyPath: IsBoss
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd452a78ba4710440a5809a7e37a2630, type: 3}
 --- !u!224 &1472635343001881108 stripped
