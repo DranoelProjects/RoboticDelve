@@ -146,4 +146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Key
   ItemValue: 1
-  ItemPointsAmount: 500
+  ItemPointsAmount: 0

@@ -35,6 +35,8 @@ public class ExitScript : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
             audioSource.PlayOneShot(sndWinLevel);
             //Loading next level after 2 seconds
+            int currentLevel = PlayerPrefs.GetInt("Level");
+            PlayerPrefs.SetInt("Level", currentLevel + 1);
             StartCoroutine(LoadScene());
         }
     }
@@ -45,6 +47,7 @@ public class ExitScript : MonoBehaviour
         //Check if the current scene is tutorial or already the real Donjon
         if (isTutorialScene)
         {
+            PlayerPrefs.SetInt("Level", 1);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else

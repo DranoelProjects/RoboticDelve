@@ -34,6 +34,7 @@ public class TutorialUI : MonoBehaviour
     public void EndTutoriel()
     {
         Time.timeScale = 1;
+        PlayerPrefs.SetInt("Level", 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

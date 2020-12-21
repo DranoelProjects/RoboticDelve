@@ -19,6 +19,7 @@ public class GameManagerScript : MonoBehaviour
     {
         virtualCamera = GameObject.Find("CMVcamScientist").GetComponent<CinemachineVirtualCamera>();
         scientist.GetComponent<PlayerScript>().CanMoove = true;
+        Application.targetFrameRate = 60;
     }
 
     public void SwapBetweenRobotAndPlayer()

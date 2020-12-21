@@ -43,21 +43,50 @@ public class Intermediaire
     //    }
     //}
 
-    public int[,] startProcess()
+    public int[,] startProcess(int lvl)
     {
         string name = "test";
-        int[,] input = new int[,]{ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0},
-                            {0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
-                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            {0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
-                            {0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0},
-                            {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                            {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0},
-                            {0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0},
-                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-
-        model = new OverlappingModel(input, name, 3, outputWidth, outputHeight, true, false, 8, 0);
+        List<int[,]> inputs = new List<int[,]>();
+        //Format d'ajout de type de niveau
+        //inputs.Add(new int[,]{  });
+        inputs.Add(new int[,]{  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0},
+                                {0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+                                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                {0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+                                {0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0},
+                                {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                                {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+                                {0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0},
+                                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} });
+        inputs.Add(new int[,] { {1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
+                                {1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+                                {1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+                                {1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                                {0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                {1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+                                {1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+                                {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+                                {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+                                {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1},
+                                {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+                                {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                                {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1},
+                                {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1},
+                                {1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1} });
+        int lvlStep = 3;
+        int index = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            if (PlayerPrefs.GetInt("Level") < lvlStep)
+            {
+                index = i;
+                break;
+            }
+            lvlStep += 3;
+        }
+        model = new OverlappingModel(inputs[index], name, 3, outputWidth, outputHeight, true, false, 8, 0);
         bool finished = false;
         int attempts = 0;
         //maxEntropy = (int) model.totalEntropy();
@@ -75,7 +104,6 @@ public class Intermediaire
             mapCouleur = model.GetMap();
             finalOutput = colorToInt(mapCouleur, outputHeight, outputWidth);
             toutFini = true;
-            Debug.Log(displayText(finalOutput));
             return finalOutput;
         }
         else
