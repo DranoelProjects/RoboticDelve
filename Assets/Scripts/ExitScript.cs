@@ -36,6 +36,7 @@ public class ExitScript : MonoBehaviour
             audioSource.PlayOneShot(sndWinLevel);
             //Loading next level after 2 seconds
             int currentLevel = PlayerPrefs.GetInt("Level");
+            PlayerPrefs.SetInt("Points", PlayerPrefs.GetInt("Points") + currentLevel * 100);
             PlayerPrefs.SetInt("Level", currentLevel + 1);
             StartCoroutine(LoadScene());
         }

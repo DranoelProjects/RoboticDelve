@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class UIScript : MonoBehaviour
 {
-    [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
+    [SerializeField] Text ironIngotNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
         copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText, outputPoints, outputLevel;
     public GameObject PanelInventory, PanelPause, PanelBoss;
-    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat, panelWin, panelTodo, panelDebug;
+    [SerializeField] GameObject panelParameters, panelDefeat, panelWin, panelTodo, panelDebug;
     [SerializeField] bool isTutorialScene = false;
     [SerializeField] Image bossFillBar, imageSwapCd;
     InventoryManager inventoryManager;
@@ -82,26 +82,9 @@ public class UIScript : MonoBehaviour
         updateSoundsEffectsVolume();
     }
 
-    public void UpdateRobotsPlansList()
-    {   
-        foreach (Transform child in panelRobotsPlansList.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-
-        List<RobotPlanData> playerRobotsPlansArray = inventoryManager.PlayerRobotsPlansArray;
-
-        foreach (RobotPlanData robotData in playerRobotsPlansArray)
-        {
-            prefabRobotPlanInventory.GetComponentInChildren<Text>().text = robotData.Description;
-            Instantiate(prefabRobotPlanInventory, panelRobotsPlansList.transform);
-        }
-    }
-
     public void UpdateInventoryUI()
     {
         ironIngotNumber.text = inventoryManager.IronIngotNumber.ToString();
-        robotPlanNumber.text = inventoryManager.RobotPlanNumber.ToString();
         munitionsNumber.text = inventoryManager.MunitionsNumber.ToString();
         goldNuggetNumber.text = inventoryManager.GoldNuggetAmount.ToString();
         keyNumber.text = inventoryManager.KeyAmount.ToString();
@@ -110,7 +93,6 @@ public class UIScript : MonoBehaviour
         leadIngotNumber.text = inventoryManager.LeadIngotAmount.ToString();
         cobaltIngotNumber.text = inventoryManager.CobaltIngotAmount.ToString();
         titaniumIngotNumber.text = inventoryManager.TitaniumIngotAmount.ToString();
-        UpdateRobotsPlansList();
     }
 
     public void PauseGame()

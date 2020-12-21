@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public int IronIngotNumber, RobotPlanNumber, MunitionsNumber, GoldNuggetAmount, KeyAmount, CopperIngotAmount, ChlorophyteIngotAmount, LeadIngotAmount, CobaltIngotAmount, TitaniumIngotAmount;
-    public List<RobotPlanData> PlayerRobotsPlansArray = new List<RobotPlanData>();
+    public int IronIngotNumber, MunitionsNumber, GoldNuggetAmount, KeyAmount, CopperIngotAmount, ChlorophyteIngotAmount, LeadIngotAmount, CobaltIngotAmount, TitaniumIngotAmount;
 
     void Awake()
     {
         IronIngotNumber = PlayerPrefs.GetInt("IronIngot");
-        RobotPlanNumber = PlayerPrefs.GetInt("RobotPlan");
         MunitionsNumber = PlayerPrefs.GetInt("Munitions");
         GoldNuggetAmount = PlayerPrefs.GetInt("GoldNugget");
         KeyAmount = PlayerPrefs.GetInt("Key");
@@ -57,15 +55,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddNewPlan(RobotPlanData robotPlanData)
-    {
-        PlayerRobotsPlansArray.Add(robotPlanData);
-    }
-
     private void OnDestroy()
     {
         PlayerPrefs.SetInt("IronIngot", IronIngotNumber);
-        PlayerPrefs.SetInt("RobotPlan", RobotPlanNumber);
         PlayerPrefs.SetInt("Munitions", MunitionsNumber);
         PlayerPrefs.SetInt("GoldNugget", GoldNuggetAmount);
         PlayerPrefs.SetInt("Key", KeyAmount);

@@ -296,9 +296,11 @@ public class EnemyAI : MonoBehaviour
             uiScript.StopBossMusic();
             uiScript.PanelBoss.SetActive(false);
             PlayerPrefs.SetInt("BossKilled", PlayerPrefs.GetInt("BossKilled") + 1);
+            PlayerPrefs.SetInt("Points", PlayerPrefs.GetInt("Points") + 50);
         } else
         {
             PlayerPrefs.SetInt("MonstersKilled", PlayerPrefs.GetInt("MonstersKilled") + 1);
+            PlayerPrefs.SetInt("Points", PlayerPrefs.GetInt("Points") + 10);
         }
     }
 

@@ -134,11 +134,6 @@ public class PlayerScript : MonoBehaviour
                 {
                     uiScript.UpdateInventoryUI();
                 }
-                if (itemName == "RobotPlan")
-                {
-                    RobotPlanScript robotPlanScript = collision.gameObject.GetComponent<RobotPlanScript>();
-                    inventoryManager.AddNewPlan(robotPlanScript.CurrentRobot);
-                }
                 break;
             case "Enemy":
                 EnemyAI enemyAI = collision.gameObject.GetComponent<EnemyAI>();
