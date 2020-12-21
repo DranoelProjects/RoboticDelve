@@ -170,18 +170,6 @@ public class EnemyAI : MonoBehaviour
                     StartCoroutine(AttackBool());  
                 }
             }
-            else
-            {
-                pDetected = false;
-            }
-            if (!pDetected)
-            {
-                //select a random point within a range that is not a wall (ispathpossible) patrol logic
-                //while (!targetReachable)
-                //{
-
-                //}
-            }
         }
     }
 

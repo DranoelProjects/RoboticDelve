@@ -195,7 +195,6 @@ public class PlayerScript : MonoBehaviour
     {
         audioSource.PlayOneShot(sndHurt);
         animator.SetTrigger("Hurt");
-        //m_rigidBody2D.AddForce(move.normalized * -200);
         healthpoints -= damage;
         PlayerPrefs.SetFloat("LifePointsLost", PlayerPrefs.GetFloat("LifePointsLost") + damage);
         healthBarScript.UpdateHealthPoints();
