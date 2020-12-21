@@ -24,39 +24,49 @@ public class GameManagerScript : MonoBehaviour
 
     public void SwapBetweenRobotAndPlayer()
     {
-        if (!swapOnCd && (RobotNumber > 0 || !IsVirtualCamFollowingScientist))
+        if (!swapOnCd)
         {
-            if (LastRobotDead)
+            if(RobotNumber > 0)
             {
-                RobotNumber--;
-                PlayerPrefs.SetInt("RobotsBuilded", PlayerPrefs.GetInt("RobotsBuilded") + 1);
-                LastRobotDead = false;
-                robotPrefab.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-                Instantiate(robotPrefab, new Vector3(scientist.transform.localPosition.x, scientist.transform.localPosition.y, 0), Quaternion.identity);
-            }
-            GameObject robot = GameObject.FindGameObjectWithTag("Robot");
-            if (IsVirtualCamFollowingScientist)
-            {
-                virtualCamera.Follow = robot.transform;
-                robot.GetComponent<PlayerScript>().CanMoove = true;
-                scientist.GetComponent<PlayerScript>().CanMoove = false;
-                IsVirtualCamFollowingScientist = false;
+                if (LastRobotDead)
+                {
+                    RobotNumber--;
+                    PlayerPrefs.SetInt("RobotsBuilded", PlayerPrefs.GetInt("RobotsBuilded") + 1);
+                    LastRobotDead = false;
+                    robotPrefab.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    Instantiate(robotPrefab, new Vector3(scientist.transform.localPosition.x, scientist.transform.localPosition.y, 0), Quaternion.identity);
+                }
+                GameObject robot = GameObject.FindGameObjectWithTag("Robot");
+                if (IsVirtualCamFollowingScientist)
+                {
+                    virtualCamera.Follow = robot.transform;
+                    robot.GetComponent<PlayerScript>().CanMoove = true;
+                    scientist.GetComponent<PlayerScript>().CanMoove = false;
+                    IsVirtualCamFollowingScientist = false;
 
-                scientist.transform.Find("Healthbar").gameObject.SetActive(false);
-                robot.transform.Find("Healthbar").gameObject.SetActive(true);
+                    scientist.transform.Find("Healthbar").gameObject.SetActive(false);
+                    robot.transform.Find("Healthbar").gameObject.SetActive(true);
 
-            }
-            else
+                }
+                else
+                {
+                    virtualCamera.Follow = scientist.transform;
+                    robot.GetComponent<PlayerScript>().CanMoove = false;
+                    scientist.GetComponent<PlayerScript>().CanMoove = true;
+                    IsVirtualCamFollowingScientist = true;
+
+                    scientist.transform.Find("Healthbar").gameObject.SetActive(true);
+                    robot.transform.Find("Healthbar").gameObject.SetActive(false);
+                }
+            } else
             {
                 virtualCamera.Follow = scientist.transform;
-                robot.GetComponent<PlayerScript>().CanMoove = false;
                 scientist.GetComponent<PlayerScript>().CanMoove = true;
                 IsVirtualCamFollowingScientist = true;
-
                 scientist.transform.Find("Healthbar").gameObject.SetActive(true);
-                robot.transform.Find("Healthbar").gameObject.SetActive(false);
             }
-            GameObject.Find("MainCanvas").GetComponent<UIScript>().StartSwapCouldown(swapCd);
+
+            GameObject.Find("MainCanvas").GetComponent<UIScript>().StartSwapCouldown(swapCd, RobotNumber);
             StartCoroutine(SwapCooldown());
         }
     }

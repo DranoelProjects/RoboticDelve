@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class UIScript : MonoBehaviour
 {
     [SerializeField] Text ironIngotNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
-        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText, outputPoints, outputLevel;
+        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, 
+        bossName, healthBarBossText, outputPoints, outputLevel, robotNumberOutput;
     public GameObject PanelInventory, PanelPause, PanelBoss;
     [SerializeField] GameObject panelParameters, panelDefeat, panelWin, panelTodo, panelDebug;
     [SerializeField] bool isTutorialScene = false;
@@ -246,12 +247,17 @@ public class UIScript : MonoBehaviour
         panelWin.SetActive(true);
     }
 
-    public void StartSwapCouldown(float cdValue)
+    public void StartSwapCouldown(float cdValue, int robotNumber)
     {
         swapCd = true;
         currentSwapCouldDownValue = cdValue;
         swapCouldownValue = cdValue;
         imageSwapCd.fillAmount = 1f;
+        robotNumberOutput.text = robotNumber.ToString();
+        if(robotNumber <= 0)
+        {
+            imageSwapCd.fillAmount = 0f;
+        }
     }
 
     public void UpdatePoints()
