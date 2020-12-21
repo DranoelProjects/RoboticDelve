@@ -585,8 +585,11 @@ MonoBehaviour:
   - {fileID: 3629852588586013604, guid: 94fa42899bfce5948b78bb37a43d5d4a, type: 3}
   - {fileID: 1364158762565080157, guid: 6e38e0a0c2dbbc74590514d6eb1f6cf7, type: 3}
   - {fileID: 3209669723892787081, guid: 9e1afd23772044f4fb2a58c3897fa942, type: 3}
+  - {fileID: 5137541495406809420, guid: 7d5200116dbf9884d8f31aa9291eaa11, type: 3}
+  m_bosses:
+  - {fileID: 6365866952443801432, guid: 4f15bab65e888644ca6574ec6401b2fc, type: 3}
+  - {fileID: 3548948255939143390, guid: 4202ae1b7aa0edc4bbcfd33c94ca13e8, type: 3}
   - {fileID: 2795949947126582217, guid: 400eeb51ae9d72844a0889ae01549b88, type: 3}
-  m_bosses: []
   m_ressourcesHolder: {fileID: 876785499}
   m_enemiesHolder: {fileID: 293323222}
   m_player: {fileID: 1062024445}
@@ -611,7 +614,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 72fe6aff02365f045b7b47d62f2b8f31, type: 2}
   - {fileID: 11400000, guid: 748dda7a6d4befc46a0da42e1ea6289e, type: 2}
   - {fileID: 11400000, guid: 788e18089521b8d4ab310d3b2c95b5fc, type: 2}
-  - {fileID: 11400000, guid: 6649151d05d81d441be43eb047881736, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 11400000, guid: 72fe6aff02365f045b7b47d62f2b8f31, type: 2}
   - {fileID: 11400000, guid: 72fe6aff02365f045b7b47d62f2b8f31, type: 2}
