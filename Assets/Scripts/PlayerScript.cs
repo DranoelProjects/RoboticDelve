@@ -169,6 +169,10 @@ public class PlayerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         GameManagerScript gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        if(gameManagerScript.RobotNumber == 0)
+        {
+            gameManagerScript.LastRobotDead = true;
+        }
         gameManagerScript.SwapBetweenRobotAndPlayer();
         gameManagerScript.LastRobotDead = true;
         Destroy(gameObject);

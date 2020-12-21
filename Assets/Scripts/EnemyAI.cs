@@ -33,6 +33,10 @@ public class EnemyAI : MonoBehaviour
     Rigidbody2D rigidbody2D;
     float colliderRadius;
 
+    //Swap
+    GameManagerScript gameManagerScript;
+    int lastRobotNumber = 2;
+
     //Sounds
     [SerializeField] AudioClip sndAttack, sndDead, sndBoss;
     AudioSource audioSource;
@@ -60,6 +64,7 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         circleCollider2D = GetComponent<CircleCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
@@ -71,6 +76,11 @@ public class EnemyAI : MonoBehaviour
     {
         if (seeker.IsDone() && !isDead)
         {
+            if (gameManagerScript.LastRobotDead && lastRobotNumber != gameManagerScript.RobotNumber)
+            {
+                lastRobotNumber = gameManagerScript.RobotNumber;
+                ShouldUpdatePlayerArray = true;
+            }
             if (ShouldUpdatePlayerArray)
             {
                 GameObject[] tag1 = GameObject.FindGameObjectsWithTag("Player");
