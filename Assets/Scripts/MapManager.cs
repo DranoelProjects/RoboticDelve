@@ -10,7 +10,7 @@ using System;
 public class MapManager : MonoBehaviour
 {
     public Tilemap m_background, m_walls, m_corner1, m_corner2, m_corner3, m_corner4;
-    public GameObject[] m_ressources, m_enemies;
+    public GameObject[] m_ressources, m_enemies, m_bosses;
     public GameObject m_ressourcesHolder, m_enemiesHolder, m_player, m_exit;
     public List<TileBase> m_tileHolder;
     public int m_oMapWidth, m_oMapHeight, m_smoothStep, m_lvl, m_enmLvl;
@@ -128,12 +128,11 @@ public class MapManager : MonoBehaviour
         sortie.transform.parent = this.transform;
         if (m_lvl % 3 == 0)
         {
-            GameObject theBoss = Instantiate(m_enemies[m_lvl], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f,(int)(m_oMapHeight / 2) * (1 - quadY) - y + 0.5f, 0), Quaternion.identity);
+            int index = (int) Math.Floor((double) (m_lvl / 3));
+            if (index >= m_bosses.Length)
+                index = m_bosses.Length - 1;
+            GameObject theBoss = Instantiate(m_bosses[index], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f,(int)(m_oMapHeight / 2) * (1 - quadY) - y + 0.5f, 0), Quaternion.identity);
             theBoss.transform.parent = m_enemiesHolder.transform;
-
-            EnemyAI bossScript = theBoss.GetComponent<EnemyAI>();
-            bossScript.setDoDrop(true);
-            bossScript.setDropItem(m_ressources[0]);
         }
         else
         {
