@@ -8,7 +8,7 @@ using Pathfinding;
 
 public class MapManager : MonoBehaviour
 {
-    public Tilemap m_background, m_walls;
+    public Tilemap m_background, m_walls, m_corner1, m_corner2, m_corner3, m_corner4;
     public GameObject[] m_ressources;
     public GameObject m_ressourcesHolder;
     public List<TileBase> m_tileHolder;
@@ -123,31 +123,45 @@ public class MapManager : MonoBehaviour
     {
         Debug.Log(x + "," + y);
         int tileToDisplay = 0;
+        bool corner1 = true, corner2 = true, corner3 = true, corner4 = true;
         if (m_metaMap[y - 1, x] == 1)
-            tileToDisplay += 1;
-        if (m_metaMap[y, x - 1] == 1)
-            tileToDisplay += 2;
-        if (m_metaMap[y, x + 1] == 1)
-            tileToDisplay += 4;
-        if (m_metaMap[y + 1, x] == 1)
-            tileToDisplay += 8;
-        if (tileToDisplay == 0)
         {
-            if (m_metaMap[y - 1, x - 1] == 1)
-                tileToDisplay += 1;
-            if (m_metaMap[y - 1, x + 1] == 1)
-                tileToDisplay += 2;
-            if (m_metaMap[y + 1, x - 1] == 1)
-                tileToDisplay += 4;
-            if (m_metaMap[y + 1, x + 1] == 1)
-                tileToDisplay += 8;
-            if (tileToDisplay != 0)
-                tileToDisplay += 16;
+            tileToDisplay += 1;
+            corner1 = corner2 = false;
         }
-        if (tileToDisplay != 0)
-            return tileToDisplay;
-        else
-            return 0;
+        if (m_metaMap[y, x - 1] == 1)
+        {
+            tileToDisplay += 2;
+            corner1 = corner3 = false;
+        }
+        if (m_metaMap[y, x + 1] == 1)
+        {
+            tileToDisplay += 4;
+            corner2 = corner4 = false;
+        }
+        if (m_metaMap[y + 1, x] == 1)
+        {
+            tileToDisplay += 8;
+            corner3 = corner4 = false;
+        }
+
+        if (m_metaMap[y - 1, x - 1] != 1)
+            corner1 = false;
+        if (m_metaMap[y - 1, x + 1] != 1)
+            corner2 = false;
+        if (m_metaMap[y + 1, x - 1] != 1)
+            corner3 = false;
+        if (m_metaMap[y + 1, x + 1] != 1)
+            corner4 = false;
+        if (corner1)
+            m_corner1.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[18]);
+        if (corner2)
+            m_corner2.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[19]);
+        if (corner3)
+            m_corner3.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[20]);
+        if (corner4)
+            m_corner4.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[21]);
+        return tileToDisplay;
     }
 
     private void spawnResources()
@@ -157,12 +171,14 @@ public class MapManager : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                x = Random.Range(0, m_oMapWidth);
-                y = Random.Range(0, m_oMapHeight);
+                x = Random.Range(0, m_oMapWidth - 1);
+                y = Random.Range(0, m_oMapHeight - 1);
+                Debug.Log(x + "," + y);
                 while (m_metaMap[y, x] == 1)
                 {
-                    x = Random.Range(0, m_oMapWidth);
-                    y = Random.Range(0, m_oMapHeight);
+                    Debug.Log(x + "," + y);
+                    x = Random.Range(0, m_oMapWidth - 1);
+                    y = Random.Range(0, m_oMapHeight - 1);
                 }
                 GameObject ressource = Instantiate(m_ressources[i], new Vector3(x - (int)m_oMapWidth / 2 + 0.5f, y - (int)m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
                 ressource.transform.parent = m_ressourcesHolder.transform;
