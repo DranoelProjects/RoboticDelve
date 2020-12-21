@@ -222,7 +222,13 @@ public class MapManager : MonoBehaviour
             m_corner3.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[19]);
         if (corner4)
             m_corner4.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[20]);
-        return tileToDisplay;
+        if (tileToDisplay != 0)
+            return tileToDisplay;
+        int rng = UnityEngine.Random.Range(1, 101);
+        if (rng > 5)
+            return tileToDisplay;
+        else
+            return 20 + rng;
     }
 
     private void spawnResources()
