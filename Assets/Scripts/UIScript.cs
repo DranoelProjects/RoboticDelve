@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class UIScript : MonoBehaviour
 {
     [SerializeField] Text ironIngotNumber, robotPlanNumber, munitionsNumber, goldNuggetNumber, keyNumber, 
-        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText, outputPoints;
+        copperIngotNumber, chlorophyteIngotNumber, leadIngotNumber, cobaltIngotNumber, titaniumIngotNumber, bossName, healthBarBossText, outputPoints, outputLevel;
     public GameObject PanelInventory, PanelPause, PanelBoss;
-    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat, panelWin, panelTodo;
+    [SerializeField] GameObject panelParameters, prefabRobotPlanInventory, panelRobotsPlansList, panelDefeat, panelWin, panelTodo, panelDebug;
     [SerializeField] bool isTutorialScene = false;
     [SerializeField] Image bossFillBar, imageSwapCd;
     InventoryManager inventoryManager;
@@ -42,6 +42,10 @@ public class UIScript : MonoBehaviour
         {
             PanelInventory.SetActive(!PanelInventory.activeInHierarchy);
             UpdateInventoryUI();
+        }
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            panelDebug.SetActive(!panelDebug.activeInHierarchy);
         }
 
         if (swapCd)
@@ -110,6 +114,10 @@ public class UIScript : MonoBehaviour
 
     public void PauseGame()
     {
+        if (panelDebug.activeInHierarchy)
+        {
+            panelDebug.SetActive(false);
+        }
         PlayerScript playerScript;
         if (gameManagerScript.IsVirtualCamFollowingScientist)
         {
@@ -266,5 +274,11 @@ public class UIScript : MonoBehaviour
     public void UpdatePoints()
     {
         outputPoints.text = PlayerPrefs.GetInt("Points").ToString();
+        outputLevel.text = PlayerPrefs.GetInt("Level").ToString();
+    }
+
+    public void OnClickReloadLvl()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

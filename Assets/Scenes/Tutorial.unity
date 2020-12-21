@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 203}
+  m_AnchoredPosition: {x: 0, y: 220}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &32825579
@@ -1471,8 +1471,11 @@ MonoBehaviour:
 
     "Clic gauche de la souris" pour attaquer
 
-    Votre
-    barre de vie se trouve en bas a gauche
+    "SUPPR"
+    permet de recommencer le niveau actuel
+
+    Votre barre de vie se trouve en bas
+    a gauche
 
 '
 --- !u!222 &587723639
@@ -3327,7 +3330,7 @@ PrefabInstance:
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -158
+      value: -211
       objectReference: {fileID: 0}
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
@@ -4294,7 +4297,7 @@ PrefabInstance:
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -223
+      value: -277
       objectReference: {fileID: 0}
     - target: {fileID: 6994167812500366534, guid: 362c979cb99ecc04ab2214d85a4d3809,
         type: 3}
