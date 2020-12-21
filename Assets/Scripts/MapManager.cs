@@ -27,7 +27,7 @@ public class MapManager : MonoBehaviour
         Intermediaire myWFC = new Intermediaire(m_oMapHeight, m_oMapWidth);
         m_lvl = PlayerPrefs.GetInt("Level");
         m_metaMap = myWFC.startProcess(m_lvl);
-        int m_enmLvl = m_lvl;
+        m_enmLvl = m_lvl;
         if (m_enmLvl >= 3)
             m_enmLvl--;
         if (m_enmLvl > m_enemies.Length)
@@ -44,6 +44,9 @@ public class MapManager : MonoBehaviour
         //Ennemis
         spawnEnemies();
 
+        //Debug
+        spawnDebug();
+
         //Pathfinding
         m_ASdata = AstarPath.active.data;
         m_ASgg = m_ASdata.gridGraph;
@@ -56,19 +59,31 @@ public class MapManager : MonoBehaviour
         AstarPath.active.logPathResults = PathLog.None;
     }
 
+    private void spawnDebug()
+    {
+        GameObject enemy1 = Instantiate(m_enemies[0], new Vector3(0 - m_oMapWidth / 2 + 0.5f, 0 - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
+        enemy1.transform.parent = m_enemiesHolder.transform;
+        GameObject enemy2 = Instantiate(m_enemies[0], new Vector3(m_oMapWidth - 1 - m_oMapWidth / 2 + 0.5f, 0 - m_oMapHeight - 1 / 2 + 0.5f, 0), Quaternion.identity);
+        enemy2.transform.parent = m_enemiesHolder.transform;
+        GameObject enemy3 = Instantiate(m_enemies[0], new Vector3(0 - m_oMapWidth / 2 + 0.5f, m_oMapHeight - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
+        enemy3.transform.parent = m_enemiesHolder.transform;
+        GameObject enemy4 = Instantiate(m_enemies[0], new Vector3(m_oMapWidth - 1 - m_oMapWidth / 2 + 0.5f, m_oMapHeight - 1 - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
+        enemy4.transform.parent = m_enemiesHolder.transform;
+    }
+
     private void spawnEnemies()
     {
         int myRng;
-        int x = UnityEngine.Random.Range(0, m_oMapWidth - 1);
-        int y = UnityEngine.Random.Range(0, m_oMapHeight - 1);
+        int x = UnityEngine.Random.Range(0, m_oMapWidth);
+        int y = UnityEngine.Random.Range(0, m_oMapHeight);
         for (int i = 0; i < 100 * m_lvl; i++)
         {
-            x = UnityEngine.Random.Range(0, m_oMapWidth - 1);
-            y = UnityEngine.Random.Range(0, m_oMapHeight - 1);
+            x = UnityEngine.Random.Range(0, m_oMapWidth);
+            y = UnityEngine.Random.Range(0, m_oMapHeight);
             while (m_metaMap[y, x] == 1)
             {
-                x = UnityEngine.Random.Range(0, m_oMapWidth - 1);
-                y = UnityEngine.Random.Range(0, m_oMapHeight - 1);
+                x = UnityEngine.Random.Range(0, m_oMapWidth);
+                y = UnityEngine.Random.Range(0, m_oMapHeight);
             }
             int dist = (int) (Math.Pow((x - (int)m_player.transform.position.x), 2) + Math.Pow((y - (int)m_player.transform.position.y), 2));
             if (dist < 100)
@@ -77,21 +92,21 @@ public class MapManager : MonoBehaviour
             }
             if (dist < 400)
             {
-                myRng = UnityEngine.Random.Range(0, 1);
+                myRng = UnityEngine.Random.Range(0, 2);
                 if (myRng == 1)
                     continue;
             }
             int selectedE = UnityEngine.Random.Range(0, m_enmLvl);
-            GameObject enemy = Instantiate(m_enemies[selectedE], new Vector3(x - (int)m_oMapWidth / 2 + 0.5f, y - (int)m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
+            GameObject enemy = Instantiate(m_enemies[selectedE], new Vector3(x - m_oMapWidth / 2 + 0.5f, y - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
             enemy.transform.parent = m_enemiesHolder.transform;
-            if (UnityEngine.Random.Range(0, 4) == 4)
+            if (UnityEngine.Random.Range(0, 5) == 4)
             {
                 int nbItem = m_ressources.Length;
                 int index = 0;
-                myRng = UnityEngine.Random.Range(0, nbItem*nbItem);
+                myRng = UnityEngine.Random.Range(0, nbItem*nbItem + 1);
                 for (int itemID = 1; itemID < nbItem; itemID++)
                 {
-                    if (myRng <= nbItem*nbItem)
+                    if (myRng <= itemID * itemID)
                     {
                         index = itemID;
                         break;
@@ -106,25 +121,24 @@ public class MapManager : MonoBehaviour
 
     private void exitAndSpawn()
     {
-        int quadX = UnityEngine.Random.Range(0, 1);
-        int quadY = UnityEngine.Random.Range(0, 1);
-        int x = UnityEngine.Random.Range(0, m_oMapWidth / 2 - 1);
-        int y = UnityEngine.Random.Range(0, m_oMapHeight / 2 - 1);
+        int quadX = UnityEngine.Random.Range(0, 2);
+        int quadY = UnityEngine.Random.Range(0, 2);
+        int x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
+        int y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
         while (m_metaMap[y + (m_oMapHeight / 2) * quadY, x + (m_oMapWidth / 2) * quadX] == 1)
         {
-            x = UnityEngine.Random.Range(0, m_oMapWidth / 2 - 1);
-            y = UnityEngine.Random.Range(0, m_oMapHeight / 2 - 1);
+            x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
+            y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
         }
         m_player.transform.SetPositionAndRotation(new Vector3(x + (m_oMapWidth / 2) * (quadX - 1), y + (m_oMapHeight / 2) * (quadY - 1), 0), Quaternion.identity);
-        Debug.Log(x + (m_oMapWidth / 2) * quadX + "," + y + (m_oMapHeight / 2) * quadY);
         quadX = (quadX + 1) % 2;
         quadY = (quadY + 1) % 2;
-        x = UnityEngine.Random.Range(0, m_oMapWidth / 2 - 1);
-        y = UnityEngine.Random.Range(0, m_oMapHeight / 2 - 1);
+        x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
+        y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
         while (m_metaMap[y + (m_oMapHeight / 2) * quadY, x + (m_oMapWidth / 2) * quadX] == 1)
         {
-            x = UnityEngine.Random.Range(0, m_oMapWidth / 2 - 1);
-            y = UnityEngine.Random.Range(0, m_oMapHeight / 2 - 1);
+            x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
+            y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
         }
         GameObject sortie = Instantiate(m_exit, new Vector3(x + (int) (m_oMapWidth / 2) * (quadX - 1) + 0.5f, y + (int) (m_oMapHeight / 2) * (quadY - 1) + 0.5f, 0), Quaternion.identity);
         sortie.transform.parent = this.transform;
@@ -132,6 +146,7 @@ public class MapManager : MonoBehaviour
         {
             GameObject theBoss = Instantiate(m_enemies[m_lvl], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f, y + (int)(m_oMapHeight / 2) * (quadY - 1) + 0.5f, 0), Quaternion.identity);
             theBoss.transform.parent = m_enemiesHolder.transform;
+
             EnemyAI bossScript = theBoss.GetComponent<EnemyAI>();
             bossScript.setDoDrop(true);
             bossScript.setDropItem(m_ressources[0]);
@@ -141,12 +156,12 @@ public class MapManager : MonoBehaviour
             int quadK = UnityEngine.Random.Range(0, 1);
             quadX = (quadX + 1 + quadK) % 2;
             quadY = (quadY + quadK) % 2;
-            x = UnityEngine.Random.Range(0, m_oMapWidth / 2 - 1);
-            y = UnityEngine.Random.Range(0, m_oMapHeight / 2 - 1);
+            x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
+            y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
             while (m_metaMap[y + (m_oMapHeight / 2) * quadY, x + (m_oMapWidth / 2) * quadX] == 1)
             {
-                x = UnityEngine.Random.Range(0, m_oMapWidth / 2 - 1);
-                y = UnityEngine.Random.Range(0, m_oMapHeight / 2 - 1);
+                x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
+                y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
             }
             GameObject key = Instantiate(m_ressources[0], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f, y + (int)(m_oMapHeight / 2) * (quadY - 1) + 0.5f, 0), Quaternion.identity);
             key.transform.parent = m_ressourcesHolder.transform;
