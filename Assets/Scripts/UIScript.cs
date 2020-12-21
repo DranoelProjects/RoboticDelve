@@ -30,6 +30,7 @@ public class UIScript : MonoBehaviour
     {
         canvasAudioSource = gameObject.GetComponent<AudioSource>();
         initVolumes();
+        UpdatePoints();
     }
 
     private void Update()

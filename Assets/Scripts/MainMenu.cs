@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         mainMenuAudioSource = gameObject.GetComponent<AudioSource>();
         initVolumes();
     }

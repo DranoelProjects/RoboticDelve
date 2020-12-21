@@ -251,6 +251,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    public void setDoDrop(bool doDrop)
+    {
+        needToDropItem = doDrop;
+    }
+
+    public void setDropItem(GameObject item)
+    {
+        itemToDrop = item;
+    }
+
     void Flip()
     {
         Vector3 theLocalScale = sprite.localScale;

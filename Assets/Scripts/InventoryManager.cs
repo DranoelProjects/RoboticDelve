@@ -28,9 +28,6 @@ public class InventoryManager : MonoBehaviour
             case "IronIngot":
                 IronIngotNumber += itemValue;
                 break;
-            case "RobotPlan":
-                RobotPlanNumber += itemValue;
-                break;
             case "Munitions":
                 MunitionsNumber += itemValue;
                 break;

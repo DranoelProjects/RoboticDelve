@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sndWinLevel: {fileID: 8300000, guid: b536e5a44f1d45547a13189be110b671, type: 3}
+  isTutorialScene: 0
 --- !u!1 &8462013482925003817
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +266,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8462013482925003817}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.560156, y: -17.317091, z: -8.728804}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8462013482285052299}
