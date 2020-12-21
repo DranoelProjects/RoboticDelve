@@ -284,10 +284,13 @@ MonoBehaviour:
   AttackCouldown: 1.5
   healthpoints: 6
   healthpointsMax: 6
-  Damage: 3
-  attackColliderRadius: 0.7
+  Damage: 2
+  AttackColliderRadius: 0.7
   isBoss: 0
+  needToFlipOtherSide: 0
+  needToDropItem: 0
   bossName: Demon Boss
+  itemToDrop: {fileID: 0}
   ShouldUpdatePlayerArray: 1
   OnAttack: 0
   IsRanged: 1

@@ -883,10 +883,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1364158762565080154, guid: 6e38e0a0c2dbbc74590514d6eb1f6cf7,
+        type: 3}
+      propertyPath: AttackCouldown
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1364158762565080157, guid: 6e38e0a0c2dbbc74590514d6eb1f6cf7,
         type: 3}
       propertyPath: m_Name
       value: SkeletonEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1364158762565080157, guid: 6e38e0a0c2dbbc74590514d6eb1f6cf7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e38e0a0c2dbbc74590514d6eb1f6cf7, type: 3}
@@ -960,7 +970,7 @@ PrefabInstance:
     - target: {fileID: 2795949947126582217, guid: 400eeb51ae9d72844a0889ae01549b88,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 400eeb51ae9d72844a0889ae01549b88, type: 3}
@@ -1050,6 +1060,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3629852588586013604, guid: 94fa42899bfce5948b78bb37a43d5d4a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3629852588586013627, guid: 94fa42899bfce5948b78bb37a43d5d4a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1122,7 +1137,7 @@ PrefabInstance:
     - target: {fileID: 3209669723892787081, guid: 9e1afd23772044f4fb2a58c3897fa942,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3209669723892787084, guid: 9e1afd23772044f4fb2a58c3897fa942,
         type: 3}
