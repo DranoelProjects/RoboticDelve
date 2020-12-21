@@ -38,14 +38,10 @@ public class MapManager : MonoBehaviour
         exitAndSpawn();
 
         //Ressources
-        //Version finale a faire
         spawnResources();
 
         //Ennemis
         spawnEnemies();
-
-        //Debug
-        spawnDebug();
 
         //Pathfinding
         m_ASdata = AstarPath.active.data;
@@ -59,24 +55,12 @@ public class MapManager : MonoBehaviour
         AstarPath.active.logPathResults = PathLog.None;
     }
 
-    private void spawnDebug()
-    {
-        GameObject enemy1 = Instantiate(m_enemies[0], new Vector3(0 - m_oMapWidth / 2 + 0.5f, 0 - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
-        enemy1.transform.parent = m_enemiesHolder.transform;
-        GameObject enemy2 = Instantiate(m_enemies[0], new Vector3(m_oMapWidth - 1 - m_oMapWidth / 2 + 0.5f, 0 - m_oMapHeight - 1 / 2 + 0.5f, 0), Quaternion.identity);
-        enemy2.transform.parent = m_enemiesHolder.transform;
-        GameObject enemy3 = Instantiate(m_enemies[0], new Vector3(0 - m_oMapWidth / 2 + 0.5f, m_oMapHeight - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
-        enemy3.transform.parent = m_enemiesHolder.transform;
-        GameObject enemy4 = Instantiate(m_enemies[0], new Vector3(m_oMapWidth - 1 - m_oMapWidth / 2 + 0.5f, m_oMapHeight - 1 - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
-        enemy4.transform.parent = m_enemiesHolder.transform;
-    }
-
     private void spawnEnemies()
     {
         int myRng;
         int x = UnityEngine.Random.Range(0, m_oMapWidth);
         int y = UnityEngine.Random.Range(0, m_oMapHeight);
-        for (int i = 0; i < 100 * m_lvl; i++)
+        for (int i = 0; i < 100 + 25 * m_lvl; i++)
         {
             x = UnityEngine.Random.Range(0, m_oMapWidth);
             y = UnityEngine.Random.Range(0, m_oMapHeight);
@@ -97,7 +81,7 @@ public class MapManager : MonoBehaviour
                     continue;
             }
             int selectedE = UnityEngine.Random.Range(0, m_enmLvl);
-            GameObject enemy = Instantiate(m_enemies[selectedE], new Vector3(x - m_oMapWidth / 2 + 0.5f, y - m_oMapHeight / 2 + 0.5f, 0), Quaternion.identity);
+            GameObject enemy = Instantiate(m_enemies[selectedE], new Vector3(x - m_oMapWidth / 2 + 0.5f, m_oMapHeight / 2 - y + 0.5f, 0), Quaternion.identity);
             enemy.transform.parent = m_enemiesHolder.transform;
             if (UnityEngine.Random.Range(0, 5) == 4)
             {
@@ -130,7 +114,7 @@ public class MapManager : MonoBehaviour
             x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
             y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
         }
-        m_player.transform.SetPositionAndRotation(new Vector3(x + (m_oMapWidth / 2) * (quadX - 1), y + (m_oMapHeight / 2) * (quadY - 1), 0), Quaternion.identity);
+        m_player.transform.SetPositionAndRotation(new Vector3(x + (m_oMapWidth / 2) * (quadX - 1) + 0.5f, (m_oMapHeight / 2) * (1 - quadY) - y + 0.5f, 0), Quaternion.identity);
         quadX = (quadX + 1) % 2;
         quadY = (quadY + 1) % 2;
         x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
@@ -140,11 +124,11 @@ public class MapManager : MonoBehaviour
             x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
             y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
         }
-        GameObject sortie = Instantiate(m_exit, new Vector3(x + (int) (m_oMapWidth / 2) * (quadX - 1) + 0.5f, y + (int) (m_oMapHeight / 2) * (quadY - 1) + 0.5f, 0), Quaternion.identity);
+        GameObject sortie = Instantiate(m_exit, new Vector3(x + (int) (m_oMapWidth / 2) * (quadX - 1) + 0.5f,(int) (m_oMapHeight / 2) * (1 - quadY) - y + 0.5f, 0), Quaternion.identity);
         sortie.transform.parent = this.transform;
         if (m_lvl % 3 == 0)
         {
-            GameObject theBoss = Instantiate(m_enemies[m_lvl], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f, y + (int)(m_oMapHeight / 2) * (quadY - 1) + 0.5f, 0), Quaternion.identity);
+            GameObject theBoss = Instantiate(m_enemies[m_lvl], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f,(int)(m_oMapHeight / 2) * (1 - quadY) - y + 0.5f, 0), Quaternion.identity);
             theBoss.transform.parent = m_enemiesHolder.transform;
 
             EnemyAI bossScript = theBoss.GetComponent<EnemyAI>();
@@ -163,7 +147,7 @@ public class MapManager : MonoBehaviour
                 x = UnityEngine.Random.Range(0, m_oMapWidth / 2);
                 y = UnityEngine.Random.Range(0, m_oMapHeight / 2);
             }
-            GameObject key = Instantiate(m_ressources[0], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f, y + (int)(m_oMapHeight / 2) * (quadY - 1) + 0.5f, 0), Quaternion.identity);
+            GameObject key = Instantiate(m_ressources[0], new Vector3(x + (int)(m_oMapWidth / 2) * (quadX - 1) + 0.5f, (int)(m_oMapHeight / 2) * (1 - quadY) - y + 0.5f, 0), Quaternion.identity);
             key.transform.parent = m_ressourcesHolder.transform;
         }
     }
@@ -190,9 +174,6 @@ public class MapManager : MonoBehaviour
         {
             for (int x = 0; x < m_oMapWidth; x++)
             {
-                //if (m_metaMap[y, x] == -1)
-                //    m_background.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[0]);
-                //else
                 if (m_metaMap[y, x] == 1)
                     m_walls.SetTile(new Vector3Int(Mathf.FloorToInt(x - m_oMapWidth / 2), Mathf.FloorToInt(-y + m_oMapHeight / 2), 0), m_tileHolder[0]);
                 else
